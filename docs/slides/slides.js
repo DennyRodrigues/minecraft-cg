@@ -41,6 +41,10 @@
     updateViewportScale();
     window.addEventListener('resize', updateViewportScale);
 
+    // Código em C com destaque de sintaxe e vídeos
+    highlightCode();
+    setupVideos();
+
     // Event Listeners
     setupKeyboard();
     setupButtons();
@@ -83,6 +87,13 @@
     });
 
     currentSlide = index;
+
+    // Vídeo de um slide que saiu da tela não continua tocando
+    slides.forEach((slide, i) => {
+      if (i !== index) {
+        slide.querySelectorAll('video').forEach((v) => v.pause());
+      }
+    });
 
     // Atualizar contador e barra
     if (counterEl) {
@@ -165,6 +176,12 @@
   // 5. Configurar Teclado
   function setupKeyboard() {
     window.addEventListener('keydown', (e) => {
+      // Com o foco no vídeo, Espaço e Enter são do player (tocar e pausar)
+      const alvo = e.target && e.target.tagName;
+      if ((alvo === 'VIDEO' || alvo === 'BUTTON') && (e.key === ' ' || e.key === 'Enter')) {
+        return;
+      }
+
       // Se modal de ajuda estiver aberto, ESC ou ? fecham
       if (helpModal && helpModal.classList.contains('open')) {
         if (e.key === 'Escape' || e.key === '?') {
@@ -281,6 +298,56 @@
           toggleOverview();
         }
       });
+    });
+  }
+
+  // 8. Destaque de sintaxe em C
+  // Os blocos <pre class="code-body" data-lang="c"> são escritos como texto
+  // puro no HTML; aqui cada trecho é classificado (comentário, texto, diretiva,
+  // palavra-chave, número, chamada de função) e envolvido no <span> da cor.
+  const C_KEYWORDS = 'static|int|float|void|unsigned|char|if|else|for|while|return|const';
+  const C_TOKEN = new RegExp(
+    '(\\/\\/[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/)' +          // 1 comentário
+    '|("(?:[^"\\\\]|\\\\.)*"|\'(?:[^\'\\\\]|\\\\.)*\')' + // 2 texto ou caractere
+    '|(#\\s*[a-z]+)' +                                          // 3 diretiva
+    '|\\b(' + C_KEYWORDS + ')\\b' +                             // 4 palavra-chave
+    '|\\b(\\d+(?:\\.\\d+)?f?)\\b' +                             // 5 número
+    '|\\b([A-Za-z_]\\w*)(?=\\s*\\()',                             // 6 chamada
+    'g'
+  );
+  const C_CLASSES = [null, 'c-comment', 'c-str', 'c-kw', 'c-kw', 'c-num', 'c-fn'];
+
+  function escapeHtml(texto) {
+    return texto.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlightC(fonte) {
+    let saida = '';
+    let ultimo = 0;
+    let m;
+    C_TOKEN.lastIndex = 0;
+    while ((m = C_TOKEN.exec(fonte)) !== null) {
+      let grupo = 1;
+      while (grupo < C_CLASSES.length && m[grupo] === undefined) grupo++;
+      saida += escapeHtml(fonte.slice(ultimo, m.index));
+      saida += '<span class="' + C_CLASSES[grupo] + '">' + escapeHtml(m[0]) + '</span>';
+      ultimo = C_TOKEN.lastIndex;
+    }
+    return saida + escapeHtml(fonte.slice(ultimo));
+  }
+
+  function highlightCode() {
+    document.querySelectorAll('pre.code-body[data-lang="c"] code').forEach((bloco) => {
+      bloco.innerHTML = highlightC(bloco.textContent);
+    });
+  }
+
+  // 9. Vídeos: aviso quando o arquivo .mp4 não está ao lado do index.html
+  function setupVideos() {
+    document.querySelectorAll('.video-frame video').forEach((video) => {
+      const marcarAusente = () => video.closest('.video-frame').classList.add('video-missing');
+      video.addEventListener('error', marcarAusente);
+      if (video.error) marcarAusente();
     });
   }
 

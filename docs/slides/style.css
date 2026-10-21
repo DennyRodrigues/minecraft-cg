@@ -87,6 +87,15 @@
   /* Efeitos e Sombras Sóbreas */
   --shadow-slide: 0 12px 32px rgba(32, 39, 45, 0.25);
   --shadow-subtle: 0 2px 6px rgba(32, 39, 45, 0.05);
+
+  /* Semana 5: componentes acrescentados (perguntas, vídeo, fórmulas, marcadores) */
+  --color-code-str: #9CC59A;                  /* Literais de texto e caractere */
+  --color-question-prompt: var(--color-text-light-muted);
+  --color-video-bg: #11161A;
+  --text-code-small: 12.5px;
+  --text-table-compact: 13.5px;
+  --text-formula: 22px;
+  --text-question: 34px;
 }
 
 /* --------------------------------------------------------------------------
@@ -942,6 +951,293 @@ body.overview-mode .slide.active {
 }
 
 /* --------------------------------------------------------------------------
+   11. Componentes da Semana 5
+   Perguntas para a turma, vídeo, fórmulas, marcadores de quadro e ao vivo,
+   colunas de código e tabelas compactas. Tudo por variáveis do :root.
+   -------------------------------------------------------------------------- */
+
+/* Rótulo do bloco à esquerda do rodapé */
+.footer-label {
+  margin-right: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.04em;
+  color: var(--color-secondary);
+}
+
+.slide-dark .footer-label {
+  color: var(--color-text-light-muted);
+}
+
+/* Marcadores do roteiro no cabeçalho: Quadro, Ao vivo, Vídeo */
+.header-tags {
+  display: flex;
+  gap: 8px;
+}
+
+.header-tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  color: var(--color-secondary);
+}
+
+.header-tag.tag-live {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.header-tag.tag-video {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Slides de pergunta (fundo grafite) */
+.slide-question {
+  padding: 60px 72px;
+}
+
+.question-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1040px;
+}
+
+.question-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  margin-bottom: 22px;
+}
+
+.question-title {
+  font-size: var(--text-question);
+  font-weight: var(--weight-semibold);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-text-light);
+  margin-bottom: 22px;
+}
+
+.question-prompt {
+  font-size: var(--text-subtitle);
+  line-height: 1.45;
+  color: var(--color-question-prompt);
+  max-width: 900px;
+}
+
+/* Frase de efeito do roteiro */
+.quote-line {
+  border-left: 3px solid var(--color-accent);
+  padding: 6px 0 6px 18px;
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  color: var(--color-text-main);
+  margin-top: 18px;
+}
+
+.slide-dark .quote-line {
+  color: var(--color-text-light);
+}
+
+/* Vídeo (tag <video> nativa; arquivo .mp4 ao lado do index.html) */
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-video-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: var(--slide-radius);
+  overflow: hidden;
+}
+
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background-color: var(--color-video-bg);
+}
+
+.video-missing-msg {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1.6;
+  color: var(--color-text-light-muted);
+}
+
+.video-frame.video-missing video {
+  visibility: hidden;
+}
+
+.video-frame.video-missing .video-missing-msg {
+  display: flex;
+}
+
+/* Grade com coluna de código mais larga */
+.grid-code {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 32px;
+  height: 100%;
+  align-items: start;
+}
+
+.grid-code-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.grid-video {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.code-body.code-small {
+  font-size: var(--text-code-small);
+  line-height: 1.5;
+}
+
+.code-body .c-str { color: var(--color-code-str); }
+
+.code-caption {
+  font-size: var(--text-caption);
+  color: var(--color-secondary);
+  margin-top: 10px;
+  line-height: 1.45;
+}
+
+/* Listas numeradas de passos */
+ol.tech-steps {
+  list-style: none;
+  counter-reset: passo;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+ol.tech-steps li {
+  counter-increment: passo;
+  position: relative;
+  padding-left: 34px;
+  font-size: var(--text-body);
+  line-height: 1.45;
+}
+
+ol.tech-steps li::before {
+  content: counter(passo, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+}
+
+.slide-dark ol.tech-steps li {
+  color: var(--color-text-light);
+}
+
+/* Fórmulas em HTML (sem biblioteca externa) */
+.formula {
+  font-family: var(--font-mono);
+  font-size: var(--text-formula);
+  color: var(--color-text-main);
+  padding: 14px 18px;
+  background-color: var(--color-surface);
+  border-left: 3px solid var(--color-primary);
+  line-height: 1.7;
+  margin: 10px 0;
+}
+
+.formula var {
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 4px;
+}
+
+.frac > span:first-child {
+  border-bottom: 1px solid var(--color-text-main);
+  padding: 0 4px;
+}
+
+.frac > span:last-child {
+  padding: 0 4px;
+}
+
+/* Tabela compacta (quadros de referência longos) */
+table.academic-table.compact {
+  font-size: var(--text-table-compact);
+}
+
+table.academic-table.compact th,
+table.academic-table.compact td {
+  padding: 6px 12px;
+}
+
+table.academic-table a {
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+/* Lista de perguntas na tela de abertura dos blocos */
+.inline-question {
+  font-size: var(--text-body);
+  color: var(--color-text-main);
+  margin-top: 14px;
+  line-height: 1.45;
+}
+
+.inline-question strong {
+  color: var(--color-accent);
+  font-weight: var(--weight-semibold);
+}
+
+.text-muted {
+  color: var(--color-secondary);
+}
+
+.space-top-md {
+  margin-top: 22px;
+}
+
+/* --------------------------------------------------------------------------
    10. CONFIGURAÇÃO DE IMPRESSÃO / EXPORTAÇÃO PARA PDF
    (Gera 1 slide por página sem margens e com alta fidelidade)
    -------------------------------------------------------------------------- */
@@ -998,4 +1294,38 @@ body.overview-mode .slide.active {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+}
+
+/* --------------------------------------------------------------------------
+   12. Slide de vídeo em tela cheia (V1, sem texto sobreposto)
+   -------------------------------------------------------------------------- */
+.slide-video {
+  padding: 24px;
+  justify-content: center;
+}
+
+.video-frame.video-frame-full {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  aspect-ratio: auto;
+  border: none;
+}
+
+/* Código mais compacto para slides com trechos longos, e colunas que não
+   deixam o código empurrar a largura do slide */
+:root {
+  --text-code-tiny: 11.5px;
+}
+
+.code-body.code-tiny {
+  font-size: var(--text-code-tiny);
+  line-height: 1.45;
+  padding: 10px 14px;
+}
+
+.grid-code > *,
+.grid-code-equal > *,
+.grid-2 > * {
+  min-width: 0;
 }
