@@ -1,0 +1,1001 @@
+/* ==========================================================================
+   Visual Design System • Computação Gráfica (UNIFAP)
+   Diretrizes: Acadêmica, técnica, editorial e minimalista (16:9)
+   100% parametrizado via variáveis CSS (zero cores hardcoded nas regras)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Variáveis Globais de Design (Facilmente Editáveis)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta Base das Diretrizes */
+  --color-graphite: #20272D;     /* Cor escura principal / títulos / capas */
+  --color-background: #F4F1EA;   /* Branco quente / fundo principal de conteúdo */
+  --color-primary: #176B70;      /* Azul-petróleo / destaque técnico principal */
+  --color-accent: #D28B51;       /* Terracota / destaque secundário e alertas */
+  --color-secondary: #68747B;    /* Cinza azulado / textos auxiliares e legendas */
+
+  /* Cores Derivadas e Semânticas */
+  --color-text-main: var(--color-graphite);
+  --color-text-muted: var(--color-secondary);
+  --color-text-light: var(--color-background);
+  --color-text-light-muted: rgba(244, 241, 234, 0.72);
+
+  --color-surface: #EDE8DE;
+  --color-surface-dark: #283038;
+  --color-surface-dark-elevated: #323C46;
+
+  --color-border-subtle: rgba(32, 39, 45, 0.12);
+  --color-border-strong: rgba(32, 39, 45, 0.24);
+  --color-border-light: rgba(244, 241, 234, 0.16);
+
+  --color-code-bg: #1A2127;
+  --color-code-text: #F4F1EA;
+  --color-code-border: #2B353D;
+  --color-code-header: #222B32;
+
+  --color-callout-bg: rgba(23, 107, 112, 0.08);
+  --color-callout-border: var(--color-primary);
+  --color-alert-bg: rgba(210, 139, 81, 0.10);
+  --color-alert-border: var(--color-accent);
+
+  --color-progress-track: rgba(32, 39, 45, 0.08);
+  --color-progress-fill: var(--color-primary);
+  --color-modal-backdrop: rgba(32, 39, 45, 0.85);
+
+  /* Cores de Sintaxe de Código Técnico */
+  --color-code-kw: var(--color-accent);        /* Terracota para palavras-chave */
+  --color-code-fn: #3BB1B8;                   /* Ciano petróleo para chamadas */
+  --color-code-num: #D8B15D;                  /* Numerais sóbrios */
+  --color-code-comment: var(--color-secondary);/* Cinza azulado para comentários */
+
+  /* Cores para Diagramas Vetoriais e SVGs */
+  --color-diagram-grid: rgba(32, 39, 45, 0.08);
+  --color-diagram-wall: var(--color-surface);
+  --color-diagram-wall-stroke: var(--color-secondary);
+  --color-diagram-box: var(--color-callout-bg);
+  --color-diagram-box-stroke: var(--color-primary);
+  --color-diagram-vector: var(--color-accent);
+
+  /* Opacidade e Estilo das Marcas d'água Geométricas de Borda */
+  --opacity-watermark-light: 0.065;
+  --opacity-watermark-dark: 0.100;
+
+  /* Tipografia */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* Escala Tipográfica (1280x720 Widescreen) */
+  --text-title-cover: 42px;      /* 36–44 pt */
+  --text-title-slide: 30px;      /* 28–34 pt */
+  --text-subtitle: 20px;         /* 20–24 pt */
+  --text-body: 18px;             /* 18–22 pt */
+  --text-caption: 13px;          /* 11–14 pt */
+  --text-code: 15px;             /* 16–20 pt */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Geometria e Layout (16:9) */
+  --slide-width: 1280px;
+  --slide-height: 720px;
+  --slide-padding-x: 64px;
+  --slide-padding-y: 48px;
+  --slide-radius: 4px;
+
+  /* Efeitos e Sombras Sóbreas */
+  --shadow-slide: 0 12px 32px rgba(32, 39, 45, 0.25);
+  --shadow-subtle: 0 2px 6px rgba(32, 39, 45, 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset e Estrutura Geral
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-graphite);
+  color: var(--color-text-main);
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   3. Viewport e Escalonamento Proporcional (16:9)
+   -------------------------------------------------------------------------- */
+#presentation-viewport {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#slides-container {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  position: relative;
+  transform-origin: center center;
+  transform: scale(var(--viewport-scale, 1));
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. Estrutura do Slide
+   -------------------------------------------------------------------------- */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  padding: var(--slide-padding-y) var(--slide-padding-x);
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  border-radius: var(--slide-radius);
+  box-shadow: var(--shadow-slide);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  overflow: hidden;
+}
+
+/* Moldura e Linhas de Enquadramento Técnico em Todos os Slides */
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid var(--color-border-subtle);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+}
+
+.slide-dark::before {
+  border-color: var(--color-border-light);
+  opacity: 0.35;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* Variação: Slide com Fundo Grafite (Capa e Transições de Seção) */
+.slide-dark {
+  background-color: var(--color-graphite);
+  color: var(--color-text-light);
+}
+
+/* --------------------------------------------------------------------------
+   5. Cabeçalho e Rodapé dos Slides (Minimalistas)
+   -------------------------------------------------------------------------- */
+.slide-header,
+.slide-body,
+.slide-footer,
+.cover-content,
+.section-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Grafismos Vetoriais de Fundo nas Bordas (Marcas d'água Sutis) */
+.bg-watermark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  color: var(--color-graphite);
+  opacity: var(--opacity-watermark-light);
+  line-height: 0;
+}
+
+.slide-dark .bg-watermark {
+  color: var(--color-background);
+  opacity: var(--opacity-watermark-dark);
+}
+
+.bg-watermark-top-right {
+  top: -24px;
+  right: -24px;
+}
+
+.bg-watermark-top-left {
+  top: -24px;
+  left: -24px;
+}
+
+.bg-watermark-bottom-right {
+  bottom: -20px;
+  right: -20px;
+}
+
+.bg-watermark-bottom-left {
+  bottom: -24px;
+  left: -24px;
+}
+
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: 12px;
+  margin-bottom: 28px;
+  flex-shrink: 0;
+}
+
+.slide-dark .slide-header {
+  border-bottom-color: var(--color-border-light);
+}
+
+.header-title {
+  font-size: var(--text-title-slide);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+  color: var(--color-text-main);
+}
+
+.slide-dark .header-title {
+  color: var(--color-text-light);
+}
+
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  min-height: 0;
+}
+
+.slide-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: 12px;
+  margin-top: 20px;
+  font-size: var(--text-caption);
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.slide-dark .slide-footer {
+  border-top-color: var(--color-border-light);
+  color: var(--color-text-light-muted);
+}
+
+.footer-slide-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-secondary);
+}
+
+.slide-dark .footer-slide-num {
+  color: var(--color-text-light-muted);
+}
+
+/* --------------------------------------------------------------------------
+   6. Modelos de Slide Específicos
+   -------------------------------------------------------------------------- */
+
+/* Slide 1: Capa (Editorial / Grafite) */
+.slide-cover {
+  justify-content: space-between;
+  padding: 60px 72px;
+}
+
+.cover-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  max-width: 1080px;
+}
+
+.cover-discipline-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+}
+
+.cover-title {
+  font-size: var(--text-title-cover);
+  font-weight: var(--weight-semibold);
+  line-height: 1.15;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.cover-divider {
+  width: 64px;
+  height: 3px;
+  background-color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.cover-subtitle {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-regular);
+  color: var(--color-text-light-muted);
+  max-width: 900px;
+  line-height: 1.4;
+  margin-bottom: 32px;
+}
+
+.cover-meta-clean {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-light-muted);
+  letter-spacing: 0.06em;
+  margin-top: 28px;
+}
+
+.cover-meta-row {
+  display: flex;
+  gap: 40px;
+  border-top: 1px solid var(--color-border-light);
+  padding-top: 20px;
+}
+
+.cover-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cover-meta-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-light-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cover-meta-val {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-light);
+}
+
+/* Slide de Seção / Transição */
+.slide-section {
+  justify-content: space-between;
+  padding: 60px 72px;
+}
+
+.section-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.section-block-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.section-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: var(--text-title-cover);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-light);
+  line-height: 1.2;
+  margin-bottom: 18px;
+  max-width: 1000px;
+}
+
+.section-divider {
+  width: 48px;
+  height: 2px;
+  background-color: var(--color-accent);
+  margin-bottom: 20px;
+}
+
+.section-desc {
+  font-size: var(--text-subtitle);
+  color: var(--color-text-light-muted);
+  max-width: 860px;
+  line-height: 1.45;
+}
+
+/* --------------------------------------------------------------------------
+   7. Layouts e Componentes Modulares
+   -------------------------------------------------------------------------- */
+
+/* Ícones Vetoriais e Elementos Gráficos Geométricos */
+.tech-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.tech-icon.icon-primary { color: var(--color-primary); }
+.tech-icon.icon-accent { color: var(--color-accent); }
+.tech-icon.icon-secondary { color: var(--color-secondary); }
+.tech-icon.icon-light { color: var(--color-text-light); }
+.tech-icon.icon-light-muted { color: var(--color-text-light-muted); }
+
+/* Diagramas Vetoriais Sóbreos */
+.diagram-container {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--slide-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  height: 100%;
+}
+
+.diagram-caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-secondary);
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* Grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  height: 100%;
+  align-items: stretch;
+}
+
+/* Roteiro / Timeline Minimalista */
+.timeline-agenda {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 8px;
+}
+
+.timeline-step.active .timeline-step-header {
+  border-bottom-color: var(--color-primary);
+}
+
+.timeline-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+}
+
+.timeline-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-secondary);
+}
+
+.timeline-title {
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-main);
+  line-height: 1.3;
+  margin-top: 4px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  color: var(--color-secondary);
+  line-height: 1.4;
+}
+
+/* Colunas e Blocos Técnicos Limpos (Sem sobrecarga de bordas) */
+.col-clean {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.col-clean-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-main);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.col-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-left: 2px solid var(--color-border-subtle);
+  padding-left: 18px;
+}
+
+.col-block-primary {
+  border-left-color: var(--color-primary);
+}
+
+.col-block-accent {
+  border-left-color: var(--color-accent);
+}
+
+.col-title {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-main);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.col-tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  color: var(--color-secondary);
+}
+
+/* Listas Estruturadas */
+ul.tech-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+ul.tech-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: var(--text-body);
+  color: var(--color-text-main);
+  line-height: 1.45;
+}
+
+ul.tech-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+
+ul.tech-list li.warn::before {
+  color: var(--color-accent);
+}
+
+ul.tech-list strong {
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-main);
+}
+
+/* Chamadas e Alertas Técnicos */
+.callout {
+  padding: 14px 18px;
+  border-left: 3px solid var(--color-callout-border);
+  background-color: var(--color-callout-bg);
+  font-size: var(--text-body);
+  color: var(--color-text-main);
+  line-height: 1.4;
+  margin: 12px 0;
+}
+
+.callout strong {
+  color: var(--color-primary);
+}
+
+.callout-alert {
+  border-left-color: var(--color-alert-border);
+  background-color: var(--color-alert-bg);
+}
+
+.callout-alert strong {
+  color: var(--color-accent);
+}
+
+/* Tabelas Técnicas */
+.table-wrapper {
+  width: 100%;
+  border-top: 1px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-border-strong);
+  overflow: hidden;
+}
+
+table.academic-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+}
+
+table.academic-table th {
+  padding: 10px 14px;
+  font-family: var(--font-primary);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-secondary);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background-color: var(--color-surface);
+}
+
+table.academic-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-main);
+  vertical-align: middle;
+}
+
+table.academic-table tr:last-child td {
+  border-bottom: none;
+}
+
+.code-inline {
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  font-weight: var(--weight-medium);
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.slide-dark .code-inline {
+  color: var(--color-accent);
+  background-color: var(--color-surface-dark);
+}
+
+/* Bloco de Código Técnico */
+.code-block {
+  background-color: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: var(--slide-radius);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background-color: var(--color-code-header);
+  border-bottom: 1px solid var(--color-code-border);
+  font-size: 12px;
+  color: var(--color-text-light-muted);
+}
+
+.code-lang-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  font-weight: var(--weight-medium);
+}
+
+.code-body {
+  padding: 14px 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--color-code-text);
+  overflow-x: auto;
+}
+
+.code-body .c-kw { color: var(--color-code-kw); font-weight: var(--weight-medium); }
+.code-body .c-fn { color: var(--color-code-fn); }
+.code-body .c-num { color: var(--color-code-num); }
+.code-body .c-comment { color: var(--color-code-comment); font-style: italic; }
+
+/* --------------------------------------------------------------------------
+   8. Controles Flutuantes da Apresentação (Interface Discreta)
+   -------------------------------------------------------------------------- */
+#slide-controls {
+  position: fixed;
+  bottom: 18px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-graphite);
+  border: 1px solid var(--color-border-light);
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: var(--shadow-slide);
+}
+
+.control-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-light-muted);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  border-radius: 2px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.control-btn:hover {
+  color: var(--color-text-light);
+  background-color: var(--color-surface-dark);
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-light);
+  padding: 0 8px;
+  user-select: none;
+}
+
+.control-divider {
+  width: 1px;
+  height: 16px;
+  background-color: var(--color-border-light);
+  margin: 0 4px;
+}
+
+.btn-close-modal {
+  width: 24px;
+  height: 24px;
+  color: var(--color-secondary);
+}
+
+.table-col-20 { width: 20%; }
+.table-col-32 { width: 32%; }
+.table-col-36 { width: 36%; }
+
+.space-top-sm {
+  margin-top: 14px;
+}
+
+.help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+/* Barra de Progresso Superior */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background-color: var(--color-progress-fill);
+  width: 0%;
+  transition: width 0.25s ease;
+  z-index: 1001;
+}
+
+/* Modal de Atalhos de Teclado */
+#help-modal {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+#help-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.help-card {
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--slide-radius);
+  padding: 28px 32px;
+  max-width: 520px;
+  width: 90%;
+  box-shadow: var(--shadow-slide);
+}
+
+.help-card h3 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+  margin-bottom: 16px;
+  color: var(--color-graphite);
+}
+
+.help-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: 14px;
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   9. Modo Visão Geral (Overview / Grade de Miniaturas)
+   -------------------------------------------------------------------------- */
+body.overview-mode #presentation-viewport {
+  overflow-y: auto;
+  align-items: flex-start;
+  padding: 32px;
+}
+
+body.overview-mode #slides-container {
+  transform: none !important;
+  width: 100% !important;
+  max-width: 1200px;
+  height: auto !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+body.overview-mode .slide {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+  transform: none !important;
+  opacity: 0.75 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  cursor: pointer;
+  padding: 20px;
+  border: 1px solid var(--color-border-subtle);
+}
+
+body.overview-mode .slide:hover {
+  opacity: 1 !important;
+  border-color: var(--color-primary);
+}
+
+body.overview-mode .slide.active {
+  border-color: var(--color-accent);
+  opacity: 1 !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. CONFIGURAÇÃO DE IMPRESSÃO / EXPORTAÇÃO PARA PDF
+   (Gera 1 slide por página sem margens e com alta fidelidade)
+   -------------------------------------------------------------------------- */
+@page {
+  size: 1280px 720px;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    width: 1280px !important;
+    height: auto !important;
+    overflow: visible !important;
+    background-color: transparent !important;
+  }
+
+  #slide-controls,
+  #progress-bar,
+  #help-modal,
+  .print-hide {
+    display: none !important;
+  }
+
+  #presentation-viewport {
+    position: static !important;
+    inset: auto !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  #slides-container {
+    transform: none !important;
+    width: 1280px !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  .slide {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px !important;
+    height: 720px !important;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

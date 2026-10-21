@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computação Gráfica — Controle e Colisão | UNIFAP</title>
+
+  <!-- Tipografia: Inter e IBM Plex Mono (Google Fonts com fallback do sistema) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Folha de Estilos Baseada em Variáveis CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra de Progresso Superior -->
+  <div id="progress-bar"></div>
+
+  <!-- Viewport da Apresentação (Escala 16:9 Dinâmica) -->
+  <main id="presentation-viewport">
+    <div id="slides-container">
+
+      <!-- ====================================================================
+           SLIDE 01: CAPA
+           ==================================================================== -->
+      <section class="slide slide-dark slide-cover active" id="slide-1">
+        <svg class="bg-watermark bg-pos-top-right" viewBox="0 0 340 300" width="340" height="300" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M230 40 L290 75 L290 145 L230 180 L170 145 L170 75 Z"/>
+          <path d="M230 40 L230 110 L290 75"/>
+          <path d="M230 110 L170 75"/>
+          <path d="M230 110 L230 180"/>
+          <path d="M170 75 L230 110 L230 180 L170 215 L110 180 L110 110 Z"/>
+          <path d="M170 75 L170 145 L230 110"/>
+          <path d="M170 145 L110 110"/>
+          <path d="M170 145 L170 215"/>
+        </svg>
+
+        <div class="cover-content">
+          <div style="margin-bottom: 24px;">
+            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.5 L20.5 7.4 L20.5 17.2 L12 22 L3.5 17.2 L3.5 7.4 Z"/>
+              <path d="M12 2.5 L12 12.2 L20.5 7.4"/>
+              <path d="M12 12.2 L3.5 7.4"/>
+              <path d="M12 12.2 L12 22"/>
+            </svg>
+          </div>
+
+          <h1 class="cover-title">Controle por Teclado e Mouse, Movimentação e Colisão</h1>
+          <div class="cover-divider"></div>
+          <p class="cover-subtitle">Entrada interativa em tempo real, tempo de quadro independente, orientação tridimensional e detecção AABB em mundos voxel.</p>
+
+          <p class="cover-meta-clean">
+            Computação Gráfica • Ciência da Computação • UNIFAP
+          </p>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">01 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 02: ROTEIRO
+           ==================================================================== -->
+      <section class="slide" id="slide-2">
+        <header class="slide-header">
+          <h2 class="header-title">Roteiro da Aula em 5 Etapas</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="timeline-agenda">
+            <div class="timeline-step active">
+              <div class="timeline-step-header">
+                <span class="timeline-num">01</span>
+                <svg class="tech-icon icon-primary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="2" y="3" width="20" height="13" rx="1.5"/>
+                  <line x1="8" y1="20" x2="16" y2="20"/>
+                  <line x1="12" y1="16" x2="12" y2="20"/>
+                </svg>
+              </div>
+              <span class="timeline-time">25 min</span>
+              <h3 class="timeline-title">Fundamentação</h3>
+              <p class="timeline-desc">Fila do SO, laço da GLUT e evento vs estado.</p>
+            </div>
+
+            <div class="timeline-step">
+              <div class="timeline-step-header">
+                <span class="timeline-num">02</span>
+                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="6" y="3" width="12" height="18" rx="6"/>
+                  <line x1="12" y1="7" x2="12" y2="10"/>
+                </svg>
+              </div>
+              <span class="timeline-time">25 min</span>
+              <h3 class="timeline-title">Mouse e Câmera</h3>
+              <p class="timeline-desc">Warp pointer e ângulos de yaw e pitch.</p>
+            </div>
+
+            <div class="timeline-step">
+              <div class="timeline-step-header">
+                <span class="timeline-num">03</span>
+                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/>
+                  <line x1="7" y1="14" x2="17" y2="14"/>
+                </svg>
+              </div>
+              <span class="timeline-time">15 min</span>
+              <h3 class="timeline-title">Prática Teclado</h3>
+              <p class="timeline-desc">Vetor booleano e desativação de repetição.</p>
+            </div>
+
+            <div class="timeline-step">
+              <div class="timeline-step-header">
+                <span class="timeline-num">04</span>
+                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <line x1="9" y1="3" x2="9" y2="21"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                </svg>
+              </div>
+              <span class="timeline-time">20 min</span>
+              <h3 class="timeline-title">Colisão AABB</h3>
+              <p class="timeline-desc">Consulta à matriz e deslize de parede.</p>
+            </div>
+
+            <div class="timeline-step">
+              <div class="timeline-step-header">
+                <span class="timeline-num">05</span>
+                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
+                </svg>
+              </div>
+              <span class="timeline-time">35 min</span>
+              <h3 class="timeline-title">1ª e 3ª Pessoa</h3>
+              <p class="timeline-desc">gluLookAt, zoom e integração no projeto.</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">02 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 03: TRANSIÇÃO BLOCO 1
+           ==================================================================== -->
+      <section class="slide slide-dark slide-section" id="slide-3">
+        <svg class="bg-watermark bg-pos-top-right" viewBox="0 0 340 260" width="340" height="260" fill="none" stroke="currentColor" stroke-width="1">
+          <rect x="70" y="20" width="230" height="150" rx="4"/>
+          <rect x="85" y="35" width="200" height="120" rx="2" stroke-dasharray="4 4"/>
+          <line x1="140" y1="170" x2="140" y2="210"/>
+          <line x1="230" y1="170" x2="230" y2="210"/>
+        </svg>
+
+        <div class="section-content">
+          <div class="section-block-num">
+            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span>Bloco 01 • Teoria</span>
+          </div>
+
+          <h2 class="section-title">Fundamentação Teórica da Entrada Interativa</h2>
+          <div class="section-divider"></div>
+          <p class="section-desc">
+            A forma como a entrada é processada organiza a lógica e a fluidez do jogo inteiro.
+          </p>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">03 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 04: PERGUNTA 01 (Hesitação do Teclado)
+           ==================================================================== -->
+      <section class="slide slide-dark slide-question" id="slide-4">
+        <div class="question-content">
+          <div class="question-badge">
+            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="9"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <circle cx="12" cy="16" r="0.75" fill="currentColor"/>
+            </svg>
+            <span>Pergunta 01 • Comportamento do Teclado</span>
+          </div>
+
+          <h2 class="question-title">
+            Pressionar uma tecla gera um único evento — mas o movimento precisa durar enquanto ela estiver pressionada. A solução óbvia é mover o personagem direto no callback de teclado. Ao testar, algo inesperado acontece.
+          </h2>
+
+          <p class="question-prompt">
+            Segurando 'W': um passo, pausa de ~500 ms, e só então movimento contínuo — igual a segurar uma letra num editor de texto. De onde vem esse atraso, e como evitá-lo num jogo?
+          </p>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">04 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 05: RESPOSTA 01 + EXPLICAÇÃO (Repetição do SO & Estado)
+           ==================================================================== -->
+      <section class="slide" id="slide-5">
+        <header class="slide-header">
+          <h2 class="header-title">Repetição de Tecla do SO vs Leitura por Estado</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>
+                  <strong>Atraso de texto:</strong> O sistema operacional impõe um atraso inicial na repetição para evitar letras duplicadas na digitação normal.
+                </li>
+                <li>
+                  <strong>Desativar repetição:</strong> Em jogos, a repetição automática deve ser desligada com <span class="code-inline">glutIgnoreKeyRepeat(1)</span>.
+                </li>
+                <li>
+                  <strong>Construir estado:</strong> A aplicação cria seu próprio vetor booleano <span class="code-inline">teclas[256]</span> marcado como ativo no pressionar e inativo no soltar.
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-clean">
+              <div class="callout">
+                <strong>Por Evento (Discreto):</strong> Ações únicas por toque — alternar câmera (<span class="code-inline">F5</span>), projeção (<span class="code-inline">P</span>), pausa (<span class="code-inline">ESC</span>).
+              </div>
+              <div class="callout space-top-sm">
+                <strong>Por Estado (Contínuo):</strong> Ações que duram enquanto a tecla estiver segura — andar (<span class="code-inline">W, A, S, D</span>), correr (<span class="code-inline">R</span>).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">05 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 06: DELTA TIME E MOVIMENTO
+           ==================================================================== -->
+      <section class="slide" id="slide-6">
+        <header class="slide-header">
+          <h2 class="header-title">Tempo de Quadro e Movimento Independente</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <div class="callout-alert callout">
+                <strong>O Erro do Deslocamento Fixo:</strong> Somar passo fixo por quadro faz a câmera andar o dobro da velocidade em 120 FPS se comparado a 60 FPS.
+              </div>
+
+              <ul class="tech-list space-top-sm">
+                <li>
+                  <span class="code-inline">glutGet(GLUT_ELAPSED_TIME)</span> fornece milissegundos decorridos.
+                </li>
+                <li>
+                  <strong>Delta Time (dt):</strong> <span class="code-inline">dt = (atual - anterior) / 1000.0f</span>.
+                </li>
+                <li>
+                  Multiplicar a velocidade por <code>dt</code> torna o movimento idêntico em qualquer taxa de quadros.
+                </li>
+              </ul>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span>src/main.c</span>
+                <span class="code-lang-tag">Linguagem C</span>
+              </div>
+              <pre class="code-body"><code><span class="c-kw">static void</span> <span class="c-fn">ao_ficar_ocioso</span>(<span class="c-kw">void</span>) {
+    <span class="c-kw">static int</span> t_ant = <span class="c-num">0</span>;
+    <span class="c-kw">int</span> t_atual = <span class="c-fn">glutGet</span>(GLUT_ELAPSED_TIME);
+    <span class="c-kw">if</span> (t_ant == <span class="c-num">0</span>) { t_ant = t_atual; <span class="c-kw">return</span>; }
+
+    <span class="c-kw">float</span> dt = (t_atual - t_ant) / <span class="c-num">1000.0f</span>;
+    t_ant = t_atual;
+
+    <span class="c-fn">atualizar_personagem</span>(dt);
+    <span class="c-fn">glutPostRedisplay</span>();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">06 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 07: MOUSE E ORIENTAÇÃO
+           ==================================================================== -->
+      <section class="slide" id="slide-7">
+        <header class="slide-header">
+          <h2 class="header-title">Mouse, Captura Virtual e Limite de Pitch</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <div class="col-clean-title">
+                <span>Captura Virtual do Cursor</span>
+              </div>
+              <ul class="tech-list">
+                <li>
+                  <span class="code-inline">glutSetCursor(GLUT_CURSOR_NONE)</span>: Oculta o cursor.
+                </li>
+                <li>
+                  <span class="code-inline">glutWarpPointer(cx, cy)</span>: Devolve o cursor ao centro a cada leitura, permitindo giro contínuo.
+                </li>
+                <li>
+                  O deslocamento é medido sempre em relação ao centro da janela, anulando o evento provocado pelo reposicionamento.
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-clean">
+              <div class="col-clean-title">
+                <span>Trava de Inclinação (Pitch Clamp)</span>
+              </div>
+              <ul class="tech-list">
+                <li>
+                  Em $90^\circ$, o vetor de olhar torna-se colinear ao vetor <span class="code-inline">Up (0, 1, 0)</span> de <span class="code-inline">gluLookAt</span>.
+                </li>
+                <li>
+                  O produto vetorial colapsa ($0$), causando inversão abrupta da cena.
+                </li>
+                <li class="warn">
+                  Solução: Limitar o pitch a no máximo $\pm 89^\circ$.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">07 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 08: PERGUNTA 02 (Travamento em Diagonal)
+           ==================================================================== -->
+      <section class="slide slide-dark slide-question" id="slide-8">
+        <div class="question-content">
+          <div class="question-badge">
+            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="9"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <circle cx="12" cy="16" r="0.75" fill="currentColor"/>
+            </svg>
+            <span>Pergunta 02 • Física de Colisão</span>
+          </div>
+
+          <h2 class="question-title">
+            Implementamos a colisão testando a nova posição antes de mover — colisões diretas funcionam. Mas ao caminhar em diagonal contra uma parede, o personagem para completamente.
+          </h2>
+
+          <p class="question-prompt">
+            Segurando W + D rumo a um bloco, há claramente espaço para deslizar ao longo da superfície. Por que o código bloqueia os dois eixos de uma vez?
+          </p>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">08 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 09: RESPOSTA 02 + EXPLICAÇÃO (Deslize Eixo a Eixo e AABB)
+           ==================================================================== -->
+      <section class="slide" id="slide-9">
+        <header class="slide-header">
+          <h2 class="header-title">Colisão com a Matriz e Deslize Eixo a Eixo</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <!-- Diagrama SVG -->
+            <div class="diagram-container">
+              <svg viewBox="0 0 320 200" width="100%" height="160" fill="none">
+                <rect x="20" y="20" width="60" height="60" stroke="var(--color-diagram-grid)" stroke-width="1"/>
+                <rect x="80" y="20" width="60" height="60" stroke="var(--color-diagram-grid)" stroke-width="1"/>
+                <rect x="140" y="20" width="60" height="60" stroke="var(--color-diagram-grid)" stroke-width="1"/>
+                <rect x="80" y="80" width="60" height="60" fill="var(--color-diagram-wall)" stroke="var(--color-diagram-wall-stroke)" stroke-width="1.5"/>
+                <text x="96" y="115" font-family="var(--font-mono)" font-size="11" fill="var(--color-secondary)">PAREDE</text>
+                <rect x="148" y="90" width="36" height="42" fill="var(--color-diagram-box)" stroke="var(--color-diagram-box-stroke)" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <circle cx="166" cy="111" r="2.5" fill="var(--color-primary)"/>
+                <line x1="148" y1="111" x2="135" y2="111" stroke="var(--color-accent)" stroke-width="1.5"/>
+                <line x1="166" y1="90" x2="166" y2="65" stroke="var(--color-primary)" stroke-width="1.5"/>
+                <polyline points="163,70 166,63 169,70" stroke="var(--color-primary)" stroke-width="1.5"/>
+              </svg>
+              <span class="diagram-caption">Teste X bloqueia + Teste Z passa = Deslize rente à parede</span>
+            </div>
+
+            <!-- Explicação -->
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>
+                  <strong>Consulta O(1):</strong> <span class="code-inline">(int)floor(coord)</span> acessa diretamente os índices da matriz tridimensional.
+                </li>
+                <li>
+                  <strong>Deslize de parede:</strong> O deslocamento é testado primeiro em $X$. Se colidir, cancela-se apenas $\Delta x$. O teste em $Z$ é avaliado em seguida.
+                </li>
+                <li class="warn">
+                  <strong>Tunelamento:</strong> Saltos grandes de <code>dt</code> podem atravessar paredes; mitigado aplicando <em>clamp</em> de segurança no tempo de quadro.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">09 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 10: CÂMERA 1ª E 3ª PESSOA & ZOOM
+           ==================================================================== -->
+      <section class="slide" id="slide-10">
+        <header class="slide-header">
+          <h2 class="header-title">Câmera em 1ª e 3ª Pessoa e Zoom por FOV</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <div class="col-clean-title">
+                <span>Primeira vs Terceira Pessoa</span>
+              </div>
+              <ul class="tech-list">
+                <li>
+                  Compartilham os mesmos ângulos de <em>yaw</em> e <em>pitch</em> e a mesma lógica de movimento.
+                </li>
+                <li>
+                  <strong>1ª Pessoa:</strong> Câmera nos olhos do avatar; o personagem não é desenhado.
+                </li>
+                <li>
+                  <strong>3ª Pessoa:</strong> Câmera recuada e elevada; o personagem é desenhado na cena.
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-clean">
+              <div class="col-clean-title">
+                <span>Zoom por Campo de Visão</span>
+              </div>
+              <ul class="tech-list">
+                <li>
+                  A roda do mouse (<span class="code-inline">glutMouseWheelFunc</span>) ajusta o <span class="code-inline">FOV</span> em <span class="code-inline">gluPerspective</span>.
+                </li>
+                <li>
+                  Aproxima a imagem trocando a abertura da lente sem mover a posição física da câmera.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">10 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 11: TABELA DE REFERÊNCIA GLUT
+           ==================================================================== -->
+      <section class="slide" id="slide-11">
+        <header class="slide-header">
+          <h2 class="header-title">Quadro de Referência da Entrada na GLUT</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="table-wrapper">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th class="table-col-20">Operação</th>
+                  <th class="table-col-36">Chamada em C</th>
+                  <th>Efeito na Aplicação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pressionar tecla</strong></td>
+                  <td><span class="code-inline">glutKeyboardFunc(fn)</span></td>
+                  <td>Marca tecla como ativa no vetor de estado.</td>
+                </tr>
+                <tr>
+                  <td><strong>Soltar tecla</strong></td>
+                  <td><span class="code-inline">glutKeyboardUpFunc(fn)</span></td>
+                  <td>Marca tecla como inativa no vetor de estado.</td>
+                </tr>
+                <tr>
+                  <td><strong>Repetição</strong></td>
+                  <td><span class="code-inline">glutIgnoreKeyRepeat(1)</span></td>
+                  <td>Desativa atraso de repetição nativo do SO.</td>
+                </tr>
+                <tr>
+                  <td><strong>Movimento livre</strong></td>
+                  <td><span class="code-inline">glutPassiveMotionFunc(fn)</span></td>
+                  <td>Deslocamento do mouse para orientar a câmera.</td>
+                </tr>
+                <tr>
+                  <td><strong>Captura do cursor</strong></td>
+                  <td><span class="code-inline">glutWarpPointer(x, y)</span></td>
+                  <td>Centraliza o cursor simulando captura contínua.</td>
+                </tr>
+                <tr>
+                  <td><strong>Roda do mouse</strong></td>
+                  <td><span class="code-inline">glutMouseWheelFunc(fn)</span></td>
+                  <td>Extensão da freeglut para controle de FOV (zoom).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">11 / 12</div>
+        </footer>
+      </section>
+
+
+      <!-- ====================================================================
+           SLIDE 12: DEMONSTRAÇÃO PRÁTICA
+           ==================================================================== -->
+      <section class="slide" id="slide-12">
+        <header class="slide-header">
+          <h2 class="header-title">Demonstrações com Flags de Compilação</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="table-wrapper">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th class="table-col-32">Comando no Terminal</th>
+                  <th>Defeito Demonstrado e Efeito Observado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="code-inline">make run USAR_DT=0</span></td>
+                  <td>Passo fixo por quadro: velocidade acoplada ao FPS da máquina.</td>
+                </tr>
+                <tr>
+                  <td><span class="code-inline">make run EXPERIMENTO_TIMER=50</span></td>
+                  <td>Simula máquina lenta (50 ms) para comparar com 16 ms (60 FPS).</td>
+                </tr>
+                <tr>
+                  <td><span class="code-inline">make run VERSAO_COLISAO=1</span></td>
+                  <td>Colisão no ponto central: o personagem penetra até a metade do bloco.</td>
+                </tr>
+                <tr>
+                  <td><span class="code-inline">make run VERSAO_COLISAO=3</span></td>
+                  <td>Eixos X e Z testados juntos: trava ao encostar na diagonal.</td>
+                </tr>
+                <tr>
+                  <td><span class="code-inline">make run LIMITAR_PITCH=0</span></td>
+                  <td>Sem trava de inclinação: olhar a 90° inverte bruscamente a imagem.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="footer-slide-num">12 / 12</div>
+        </footer>
+      </section>
+
+    </div><!-- /#slides-container -->
+  </main>
+
+
+  <!-- ====================================================================
+       CONTROLES FLUTUANTES DA APRESENTAÇÃO (Ocultos na impressão para PDF)
+       ==================================================================== -->
+  <aside id="slide-controls" class="print-hide">
+    <button class="control-btn" id="btn-prev" title="Slide Anterior (←)">◀</button>
+    <div class="slide-counter">
+      <span id="current-slide-index">01</span> / <span id="total-slides-count">12</span>
+    </div>
+    <button class="control-btn" id="btn-next" title="Próximo Slide (→)">▶</button>
+    <div class="control-divider"></div>
+    <button class="control-btn" id="btn-overview" title="Grade de Miniaturas (O)">⊞</button>
+    <button class="control-btn" id="btn-fullscreen" title="Tela Cheia (F)">⛶</button>
+    <button class="control-btn" id="btn-print" title="Exportar para PDF (P ou Ctrl+P)">🖨</button>
+    <button class="control-btn" id="btn-help" title="Atalhos de Teclado (?)">?</button>
+  </aside>
+
+
+  <!-- ====================================================================
+       MODAL DE AJUDA COM ATALHOS DE TECLADO (print-hide)
+       ==================================================================== -->
+  <div id="help-modal" class="print-hide">
+    <div class="help-card">
+      <div class="help-header">
+        <h3>Atalhos da Apresentação</h3>
+        <button id="btn-close-help" class="control-btn btn-close-modal">✕</button>
+      </div>
+
+      <div class="help-item">
+        <span>Avançar Slide</span>
+        <div><span class="kbd">→</span> <span class="kbd">Espaço</span> <span class="kbd">Enter</span></div>
+      </div>
+      <div class="help-item">
+        <span>Voltar Slide</span>
+        <div><span class="kbd">←</span> <span class="kbd">Backspace</span></div>
+      </div>
+      <div class="help-item">
+        <span>Primeiro / Último</span>
+        <div><span class="kbd">Home</span> / <span class="kbd">End</span></div>
+      </div>
+      <div class="help-item">
+        <span>Alternar Tela Cheia</span>
+        <span class="kbd">F</span>
+      </div>
+      <div class="help-item">
+        <span>Visão Geral (Grid)</span>
+        <span class="kbd">O</span>
+      </div>
+      <div class="help-item">
+        <span>Exportar para PDF</span>
+        <div><span class="kbd">P</span> ou <span class="kbd">Ctrl + P</span></div>
+      </div>
+      <div class="help-item">
+        <span>Fechar Ajuda / Sair da Visão Geral</span>
+        <span class="kbd">ESC</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script do Motor dos Slides -->
+  <script src="slides.js"></script>
+</body>
+</html>
