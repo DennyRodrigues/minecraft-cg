@@ -1,8 +1,8 @@
 /*
  * config.h
  *
- * Todas as constantes do jogo: chaves de demonstração, tipos de bloco,
- * tamanho do mundo, medidas do personagem e da câmera. Ficam juntas
+ * Todas as constantes do jogo: tipos de bloco, tamanho do mundo,
+ * medidas do personagem e da câmera. Ficam juntas
  * para que mudar um valor (a velocidade, a altura do personagem) seja
  * mexer num lugar só, e para que todos os módulos vejam o mesmo valor.
  */
@@ -11,45 +11,6 @@
 #define CONFIG_H
 
 #define PI 3.14159265f
-
-/* ------------------------------------------------------------------ */
-/* Demonstração (semana 5)                                            */
-/* Cada chave abaixo troca uma parte do código por uma versão         */
-/* "errada", para mostrar em sala o defeito que a versão final        */
-/* corrige. O jeito mais simples de trocar é pelo make, por exemplo   */
-/* "make run VERSAO_COLISAO=3"; o Makefile recompila tudo sozinho     */
-/* quando as chaves mudam. O valor escrito aqui é o da entrega.       */
-/*                                                                    */
-/*   EXPERIMENTO_TIMER  0: atualiza sempre que a GLUT está ociosa     */
-/*                      16 ou 50: atualiza a cada 16 ou 50 ms, para   */
-/*                      simular uma máquina rápida e uma lenta        */
-/*   USAR_DT            0: passo fixo por quadro (anda mais rápido    */
-/*                      com mais FPS); 1: velocidade x tempo          */
-/*   VERSAO_COLISAO     1: só o ponto central; 2: caixa inteira;      */
-/*                      3: dois eixos juntos (trava na diagonal);     */
-/*                      4: eixo a eixo (desliza na parede)            */
-/*   LIMITAR_PITCH      0: sem limite (a imagem inverte ao olhar      */
-/*                      para cima); 1: limitado a 89 graus            */
-/*                                                                    */
-/* A versão original, com movimento por evento de tecla, é o commit   */
-/* 5c4bbd3 do repositório.                                            */
-/* ------------------------------------------------------------------ */
-
-#ifndef EXPERIMENTO_TIMER
-#define EXPERIMENTO_TIMER 0
-#endif
-
-#ifndef USAR_DT
-#define USAR_DT 1
-#endif
-
-#ifndef VERSAO_COLISAO
-#define VERSAO_COLISAO 4
-#endif
-
-#ifndef LIMITAR_PITCH
-#define LIMITAR_PITCH 1
-#endif
 
 /* ------------------------------------------------------------------ */
 /* Tipos de bloco                                                     */
@@ -106,8 +67,6 @@
 
 #define VELOCIDADE       5.0f   /* blocos por segundo */
 #define VELOCIDADE_GIRO  90.0f  /* graus por segundo (setas) */
-#define PASSO_POR_QUADRO 0.1f   /* só com USAR_DT 0 */
-#define GIRO_POR_QUADRO  2.0f   /* só com USAR_DT 0 */
 #define DT_MAXIMO        0.1f   /* maior tempo de quadro aceito, em s */
 #define FATOR_CORRIDA    2.0f   /* segurando R, a velocidade dobra */
 #define PASSO_MAXIMO     0.5f   /* maior deslocamento testado de uma vez */

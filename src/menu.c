@@ -97,67 +97,15 @@ static void retangulo(float x0, float y0, float x1, float y1)
     glEnd();
 }
 
-/* ==================================================================
- * DESENHAMENU: texto e painel 2D por cima da cena 3D
- *
- * O problema
- *   O menu é uma imagem plana, medida em pixels da janela, desenhada
- *   POR CIMA da cena. Mas, quando desenha() chega aqui, o OpenGL está
- *   configurado para 3D: a matriz de projeção é a perspectiva da
- *   câmera, a de modelo-visualização é o gluLookAt, o teste de
- *   profundidade está ligado. Desenhar o menu com essa configuração o
- *   colocaria em algum lugar do mundo, atrás de blocos.
- *
- * A teoria
- *   Uma interface por cima da cena (em inglês, HUD ou overlay) é
- *   desenhada numa segunda passada, com outra configuração:
- *
- *     projeção ortográfica em pixels  gluOrtho2D(0, largura, 0, altura)
- *                                     faz cada unidade valer um pixel,
- *                                     com (0, 0) no canto inferior
- *                                     esquerdo: o painel é posicionado
- *                                     direto em coordenadas de tela
- *     modelo-visualização identidade  sem câmera: o que se desenha não
- *                                     está no mundo
- *     sem teste de profundidade       o buffer de profundidade ainda
- *                                     guarda as distâncias da cena; com
- *                                     o teste ligado, o painel poderia
- *                                     ficar "atrás" de um bloco
- *
- *   glPushMatrix/glPopMatrix nas duas matrizes guardam a configuração
- *   3D e a devolvem no fim, para o próximo quadro começar como sempre.
- *
- *   A cena escurecida usa TRANSPARÊNCIA (em inglês, blending). Com
- *   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA), a cor final de
- *   cada pixel é a mistura
- *
- *       final = alfa x cor nova + (1 - alfa) x cor que já estava lá
- *
- *   Um retângulo preto com alfa 0.5 deixa a cena com metade do brilho,
- *   ainda visível por trás do menu.
- *
- *   O texto usa as fontes de bitmap da GLUT: glRasterPos2f fixa onde a
- *   próxima letra começa, e cada glutBitmapCharacter desenha uma letra
- *   e anda para a direita a largura dela. Detalhe que costuma confundir:
- *   a cor do texto é a cor ativa NO MOMENTO do glRasterPos, por isso
- *   glColor vem antes dele.
- *
- * Como o código produz o efeito
- *   1. Guarda as matrizes, monta a projeção em pixels e desliga
- *      profundidade e descarte de faces (os retângulos 2D não precisam).
- *   2. Escurece a tela inteira com um retângulo preto semitransparente.
- *   3. Mede o texto (larguraTexto) para dimensionar o painel e o
- *      centraliza na janela; desenha o painel, mais escuro.
- *   4. Escreve o título, a lista de instruções em duas colunas (tecla e
- *      ação) e o rodapé.
- *   5. Desfaz tudo na ordem inversa.
- *
- * Pergunta provável
- *   "Por que o menu não fica escondido atrás dos blocos?"
- *   Porque o teste de profundidade está desligado enquanto ele é
- *   desenhado: o OpenGL pinta os pixels sem comparar com a distância
- *   dos blocos, e, como o menu é desenhado por último, fica por cima.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Menu: desenhado por cima da cena numa segunda passada, em 2D.      */
+/* Projeção ortográfica em pixels (gluOrtho2D), modelo-visualização   */
+/* identidade e teste de profundidade desligado, para o painel não    */
+/* ficar atrás dos blocos. A cena é escurecida com transparência      */
+/* (alfa 0.5). As matrizes 3D são guardadas e devolvidas no fim. A    */
+/* cor do texto vale a partir do glRasterPos, por isso glColor vem    */
+/* antes.                                                             */
+/* ------------------------------------------------------------------ */
 
 static const char *instrucoes[][2] = {
     { "W / S",                    "andar para frente / para trás" },

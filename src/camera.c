@@ -36,66 +36,15 @@ int alturaJanela  = 768;
 int projecaoOrtogonal = 0;      /* 0 perspectiva, 1 ortográfica (tecla P) */
 float campoDeVisao = 60.0f;     /* graus; alterado pela roda do mouse */
 
-/* ==================================================================
- * APLICAPROJECAO: monta a "lente" da câmera na matriz de projeção
- *
- * O problema
- *   A cena é 3D, a tela é 2D. Alguém precisa decidir como cada ponto do
- *   mundo cai num ponto da tela: o que é visível, o que fica maior ou
- *   menor, até onde se enxerga. Antes isso era fixo em redimensiona();
- *   agora três coisas mudam essa decisão durante o jogo: o tamanho da
- *   janela, a tecla P e a roda do mouse. Por isso virou uma função que
- *   todos chamam.
- *
- * A teoria
- *   O OpenGL do pipeline fixo usa duas matrizes. A de MODELO-VISUALIZAÇÃO
- *   (GL_MODELVIEW) diz onde as coisas estão em relação à câmera: é a
- *   posição da câmera. A de PROJEÇÃO (GL_PROJECTION) diz como o espaço à
- *   frente da câmera é achatado na tela: é a lente. Trocar a lente não
- *   move a câmera, e mover a câmera não troca a lente.
- *
- *   Na perspectiva, o volume visível é um tronco de pirâmide (em inglês,
- *   frustum) com o vértice no olho:
- *
- *            plano próximo        plano distante
- *                 |                     |
- *        olho  <  |                     |
- *               \ |       visível       |
- *        fov     >|                     |
- *               / |                     |
- *              <  |                     |
- *
- *   Um objeto a uma distância d aparece na tela com tamanho proporcional
- *   a 1 / d: por isso o que está longe fica pequeno. O campo de visão
- *   (fov) é a abertura vertical da pirâmide; a abertura horizontal sai
- *   da proporção largura / altura da janela. Se a proporção não entrasse
- *   na conta, a imagem seria esticada para ocupar a janela e o cubo
- *   viraria um paralelepípedo.
- *
- *   Na ortográfica, o volume visível é uma caixa: o tamanho na tela não
- *   depende da distância. É a vista de planta de um projeto, útil para
- *   medir, mas sem sensação de profundidade.
- *
- * Como o código produz o efeito
- *   glMatrixMode(GL_PROJECTION) e glLoadIdentity() começam uma lente do
- *   zero. gluPerspective recebe fov, proporção, plano próximo e plano
- *   distante; glOrtho recebe os seis lados da caixa, com a mesma
- *   proporção nos lados esquerdo e direito. No fim, a função volta para
- *   GL_MODELVIEW, porque é nela que desenha() e a cena trabalham.
- *
- *   O plano próximo é 0.1 nos dois modos. Na ortográfica ele poderia ser
- *   negativo, mas aí entrariam no volume blocos que estão atrás do olho,
- *   e, por estarem "mais perto", seriam desenhados por cima de tudo.
- *
- * Pergunta provável
- *   "Por que não usar plano próximo 0?"
- *   O buffer de profundidade não guarda a distância de forma linear: a
- *   precisão é muito maior perto do plano próximo e cai com a razão
- *   distante / próximo. Com o próximo em 0 essa razão vai ao infinito,
- *   não sobra precisão para as superfícies e faces vizinhas começam a
- *   disputar o mesmo pixel (o defeito chamado z-fighting). Na
- *   perspectiva, além disso, o próximo em 0 é uma divisão por zero.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Projeção: monta a "lente" da câmera na matriz GL_PROJECTION.       */
+/* Perspectiva (gluPerspective): campo de visão, proporção da janela, */
+/* plano próximo e distante; o que está longe fica menor. Ortográfica */
+/* (glOrtho): uma caixa, em que o tamanho não depende da distância. A */
+/* proporção evita a imagem esticada. O plano próximo é 0.1 nos dois  */
+/* modos: positivo, senão blocos atrás do olho entrariam na imagem.   */
+/* Chamada ao redimensionar, na tecla P e no zoom.                    */
+/* ------------------------------------------------------------------ */
 
 void aplicaProjecao(void)
 {
@@ -130,58 +79,13 @@ void redimensiona(int largura, int altura)
     aplicaProjecao();
 }
 
-/* ==================================================================
- * DIRECAODOOLHAR: vetor de direção a partir dos ângulos yaw e pitch
- *
- * O problema
- *   O mouse fornece dois ângulos, mas o gluLookAt não recebe ângulos:
- *   recebe um ponto para onde olhar. É preciso converter "girado tantos
- *   graus para o lado e inclinado tantos graus para cima" num vetor.
- *
- * A teoria
- *   A orientação é descrita por dois ângulos, com os nomes em inglês de
- *   uso corrente: yaw (guinada), o giro em torno do eixo vertical, e
- *   pitch (arfagem), a inclinação para cima ou para baixo. A conversão
- *   para vetor é a das coordenadas esféricas, feita em duas etapas.
- *
- *   1. O pitch divide o vetor de comprimento 1 entre "para cima" e
- *      "no chão" (vista de lado):
- *
- *                       . direção (comprimento 1)
- *                      /|
- *                     / | sen(pitch)   parte vertical
- *                    /  |
- *              olho o---+
- *                cos(pitch)            parte no chão
- *
- *   2. O yaw distribui a parte do chão entre x e z, exatamente como na
- *      semana 4 (vista de cima, yaw 0 olhando para -z):
- *
- *              -z
- *               ^   . (sen(yaw), -cos(yaw))
- *               |  /
- *               | / yaw
- *               o------> +x
- *
- *   Juntando: direção = ( sen(yaw)·cos(pitch),
- *                         sen(pitch),
- *                        -cos(yaw)·cos(pitch) )
- *
- *   O comprimento continua 1, porque
- *   cos²(pitch)·(sen²(yaw) + cos²(yaw)) + sen²(pitch) = cos² + sen² = 1.
- *
- * Como o código produz o efeito
- *   Os ângulos são guardados em graus (mais fáceis de ler) e convertidos
- *   para radianos, que é o que sinf e cosf esperam. As três linhas são a
- *   fórmula acima. Quem chama soma o vetor ao olho para obter o ponto
- *   observado do gluLookAt.
- *
- * Pergunta provável
- *   "Por que o cos(pitch) multiplica x e z?"
- *   Porque, quanto mais se olha para cima, menos do vetor sobra no chão.
- *   Olhando reto para cima (pitch 90), cos(pitch) = 0 e o vetor é só
- *   (0, 1, 0): o yaw deixa de importar.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Direção do olhar a partir de yaw e pitch (coordenadas esféricas).  */
+/* O pitch divide o vetor unitário entre vertical, sen(pitch), e      */
+/* horizontal, cos(pitch); o yaw distribui a parte horizontal entre x */
+/* e z, com yaw 0 olhando para -z. Quem chama soma o vetor ao olho    */
+/* para obter o alvo do gluLookAt.                                    */
+/* ------------------------------------------------------------------ */
 
 void direcaoDoOlhar(float *dx, float *dy, float *dz)
 {
@@ -193,95 +97,18 @@ void direcaoDoOlhar(float *dx, float *dy, float *dz)
     *dz = -cosf(ry) * cosf(rp);
 }
 
-/* ==================================================================
- * DESENHAJOGADOR: o personagem, visível só em terceira pessoa
- *
- * O problema
- *   Em terceira pessoa a câmera sai da cabeça do personagem, e ele
- *   precisa aparecer na posição dele, virado para onde olha, com braços
- *   e pernas que balançam enquanto ele anda.
- *
- * A teoria
- *   1. Composição de transformações (semana 3). Na pilha de matrizes do
- *   OpenGL, a transformação escrita POR ÚLTIMO é a primeira a agir
- *   sobre os vértices. Para o boneco inteiro, lendo de baixo para cima:
- *
- *     peças (caixa, membro) montadas em volta da origem, pés em y = 0
- *     glRotatef(-yaw)       gira o boneco em torno do eixo vertical que
- *                           passa pelo centro dele
- *     glTranslatef(jogador) leva o boneco pronto até a posição no mundo
- *
- *   A ordem importa: girar ANTES de transladar gira o boneco em torno
- *   do próprio eixo; o contrário o faria orbitar a origem do mundo.
- *
- *   Por que -yaw: glRotatef(θ) em torno de y leva o vetor (0, 0, -1)
- *   para (-sen θ, 0, -cos θ). A frente do personagem é
- *   (sen(yaw), 0, -cos(yaw)), então θ precisa ser -yaw para a frente
- *   local do boneco (-z, onde está o rosto) coincidir com a dele.
- *
- *   2. Modelo hierárquico. O boneco é uma árvore de partes: o corpo
- *   inteiro gira com o yaw, e dentro dele cada braço e perna gira
- *   sozinho em torno da sua articulação. glPushMatrix/glPopMatrix
- *   delimitam cada ramo: o que acontece dentro de um membro (o giro
- *   dele) não afeta os outros, mas tudo herda o giro e a posição do
- *   corpo.
- *
- *   3. Girar em torno de um ponto que não é a origem. glRotatef sempre
- *   gira em torno da origem. Para a perna girar em torno do quadril, e
- *   não do centro dela, a perna é desenhada PENDURADA abaixo da origem
- *   (de y = 0 até y = -COMPRIMENTO_MEMBRO), girada ali, e só depois
- *   levada até o quadril:
- *
- *       glTranslatef(quadril)    3. leva a origem (com a perna) ao quadril
- *       glRotatef(angulo, x)     2. gira em torno da origem = do quadril
- *       caixa(... y = -0.7 ...)  1. perna pendurada abaixo da origem
- *
- *            o  quadril                 o  quadril
- *            |                           \
- *            |   perna parada             \   perna girada para a frente
- *            |                             \
- *
- *   Ângulo positivo em torno de x leva o ponto (0, -C, 0) para
- *   (0, -C·cos θ, -C·sen θ): z negativo, ou seja, para a FRENTE.
- *
- *   4. Animação da caminhada. O ângulo de cada membro é
- *
- *       BALANCO_MAXIMO x amplitude x sen(fase)
- *
- *   O seno faz o vaivém. A fase avança com a DISTÂNCIA andada, e não com
- *   o tempo (ver atualiza): o passo acompanha o deslocamento, correr
- *   balança mais rápido sozinho, e encostado numa parede, sem andar, o
- *   balanço não avança. A amplitude vai de 0 a 1 em poucos décimos de
- *   segundo quando ele começa a andar e volta a 0 quando para, para os
- *   membros não congelarem no meio do passo. Perna esquerda e braço
- *   direito usam +ângulo, os outros dois -ângulo: braço e perna do
- *   mesmo lado vão em sentidos opostos, como numa caminhada de verdade.
- *
- *   5. Por que o boneco cabe na caixa de colisão. A caixa não gira (ver
- *   POSICAOLIVRE), mas o desenho gira. Tudo o que é desenhado precisa
- *   ficar a menos de 0.3 (meia caixa) do eixo vertical, em qualquer
- *   ângulo, senão o boneco entra na parede. Tronco e braços juntos têm
- *   0.5 de largura e 0.2 de profundidade: os cantos ficam a
- *   raiz(0.25² + 0.1²) = 0.27 do eixo. A cabeça, de 0.38, tem cantos a
- *   0.19 x raiz(2) = 0.27. Só durante o balanço, mãos e pés passam
- *   alguns centímetros desse limite, o que não se nota.
- *
- * Como o código produz o efeito
- *   caixa() desenha uma peça: leva o cubo de lado 1 até o canto da peça
- *   e o estica com glScalef. membro() faz o esquema do item 3 para um
- *   braço ou uma perna de duas cores (manga e mão, calça e sapato).
- *   desenhaJogador() monta: pernas, tronco, braços, cabeça, cabelo
- *   (uma casca um pouco maior que a cabeça, que cobre topo, nuca e
- *   lados mas fica atrás do rosto), franja e olhos (caixas finas, 0.01
- *   à frente do rosto). glScalef com valores positivos não inverte o
- *   sentido dos vértices, então o GL_CULL_FACE continua correto.
- *
- * Pergunta provável
- *   "Por que a perna gira em torno do quadril, e não do centro dela?"
- *   Porque ela é desenhada com o topo na origem e só depois transladada
- *   até o quadril. O giro, que é sempre em torno da origem, acontece
- *   com o quadril na origem.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Personagem, desenhado só em terceira pessoa, como modelo           */
+/* hierárquico. O corpo é levado aos pés do jogador e girado por      */
+/* -yaw, para a frente local (-z) coincidir com a do olhar. Cada      */
+/* braço e perna é desenhado pendurado abaixo da origem, girado ali e */
+/* só então levado à articulação, para girar em torno do ombro ou do  */
+/* quadril.                                                           */
+/*                                                                    */
+/* O balanço é BALANCO_MAXIMO x amplitude x sen(fase); a fase avança  */
+/* com a distância andada (ver atualiza). Tudo fica a menos de 0.3 do */
+/* eixo vertical, dentro da caixa de colisão em qualquer giro.        */
+/* ------------------------------------------------------------------ */
 
 /* Uma peça do boneco: caixa com o canto mínimo em (x, y, z) do sistema
    local atual e as medidas dadas */
@@ -367,59 +194,14 @@ void desenhaJogador(void)
     glPopMatrix();
 }
 
-/* ==================================================================
- * POSICIONACAMERA: primeira e terceira pessoa com os mesmos dados
- *
- * O problema
- *   A mesma posição e a mesma orientação do personagem precisam virar
- *   duas vistas diferentes: dos olhos dele, ou de trás e de cima.
- *
- * A teoria
- *   gluLookAt(olho, alvo, cima) monta a MATRIZ DE VISUALIZAÇÃO. A
- *   câmera do OpenGL nunca sai da origem: o que gluLookAt faz é mover e
- *   girar o MUNDO inteiro ao contrário, até que o olho fique na origem
- *   e o alvo fique à frente dele. Por isso ela é chamada logo depois de
- *   glLoadIdentity e antes de desenhar qualquer coisa.
- *
- *   Os dois modos usam os mesmos dados (posição, yaw, pitch) e diferem
- *   só nos argumentos de gluLookAt:
- *
- *     primeira pessoa  olho na cabeça; alvo = cabeça + direção do olhar
- *     terceira pessoa  olho atrás e acima da cabeça; alvo = a cabeça
- *
- *   O modo de câmera é uma decisão de VISUALIZAÇÃO, não de lógica:
- *   nada no movimento muda, e por isso alternar o modo andando não muda
- *   a trajetória do personagem.
- *
- *   Na terceira pessoa o recuo é só HORIZONTAL, a uma altura fixa. Se a
- *   câmera recuasse ao longo da direção completa do olhar, ao olhar para
- *   cima ela iria para baixo da cabeça, e, com o pitch perto de 89,
- *   uns 3 blocos dentro do chão:
- *
- *       recuo pela direção do olhar        recuo horizontal (usado)
- *
- *                 / alvo                    câmera o
- *                /                                  \
- *       cabeça  o                            cabeça  o
- *       -------/------------ chão           ----------------- chão
- *             o câmera (enterrada)
- *
- *   O pitch entra só no alvo: ele sobe ou desce DISTANCIA x sen(pitch).
- *   Com pitch 0, o alvo é a própria cabeça. Como o vetor câmera -> alvo
- *   sempre tem 4 blocos na horizontal, ele nunca fica paralelo a "cima"
- *   e o gluLookAt não degenera (ver LIMITE DO PITCH).
- *
- * Como o código produz o efeito
- *   cabeca é a posição dos olhos. Em primeira pessoa, alvo = cabeça +
- *   direcaoDoOlhar(). Em terceira, a frente no chão sai só do yaw, o
- *   olho é cabeça - frente x DISTANCIA + ELEVACAO para cima, e o alvo é
- *   a cabeça deslocada verticalmente pelo pitch.
- *
- * Pergunta provável
- *   "Por que o personagem não é desenhado em primeira pessoa?"
- *   Porque ele ocupa o próprio ponto de vista: o olho estaria dentro do
- *   cubo do corpo, e as faces dele tapariam a tela.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Câmera: gluLookAt(olho, alvo, cima) com os mesmos dados nos dois   */
+/* modos. Primeira pessoa: olho na altura dos olhos, alvo logo à      */
+/* frente na direção do olhar. Terceira pessoa: olho DISTANCIA_CAMERA */
+/* atrás, só no plano do chão, e ELEVACAO_CAMERA acima, para a câmera */
+/* nunca entrar no chão; o alvo é a cabeça, deslocada na vertical     */
+/* pelo pitch.                                                        */
+/* ------------------------------------------------------------------ */
 
 void posicionaCamera(void)
 {

@@ -6,7 +6,7 @@ O código está dividido por assunto, e cada arquivo é comentado para ser lido 
 
 ```
 minecraft-cg/
-├── Makefile          compilação (make, make run, make clean, make ajuda)
+├── Makefile          compilação (make, make run, make clean)
 ├── README.md
 ├── src/              código (.c)
 ├── include/          cabeçalhos (.h)
@@ -16,14 +16,14 @@ minecraft-cg/
 | Arquivo | Conteúdo |
 |---|---|
 | [`src/main.c`](src/main.c) | Janela, registro dos callbacks, desenho do quadro e FPS |
-| [`include/config.h`](include/config.h) | Constantes do jogo e chaves de demonstração |
+| [`include/config.h`](include/config.h) | Constantes do jogo |
 | [`include/graficos.h`](include/graficos.h) | Cabeçalhos do OpenGL, GLU e GLUT |
 | [`src/mundo.c`](src/mundo.c) / [`include/mundo.h`](include/mundo.h) | Mapa, matriz do mundo, construção e desenho dos blocos |
 | [`src/colisao.c`](src/colisao.c) / [`include/colisao.h`](include/colisao.h) | Posição do personagem e colisão com o mundo |
 | [`src/camera.c`](src/camera.c) / [`include/camera.h`](include/camera.h) | Projeção, direção do olhar, primeira e terceira pessoa, desenho do personagem |
 | [`src/entrada.c`](src/entrada.c) / [`include/entrada.h`](include/entrada.h) | Teclado, mouse, roda e atualização do movimento |
 
-O comentário MÓDULOS, no início de `src/main.c`, explica por que o código é dividido assim (compilação separada, `.h` com declarações e `.c` com definições, `extern`). As funções centrais têm comentários longos, marcados com `====`, que explicam o problema que resolvem, a teoria por trás e como o código produz o efeito, terminando com uma pergunta provável e sua resposta.
+O comentário MÓDULOS, no início de `src/main.c`, explica por que o código é dividido assim (compilação separada, `.h` com declarações e `.c` com definições, `extern`). As funções centrais têm um comentário antes delas explicando o que fazem e por quê.
 
 ## O que tem no cenário
 
@@ -74,7 +74,6 @@ make run
 | `make` | Compila e gera `./mine` |
 | `make run` | Compila, se precisar, e roda |
 | `make clean` | Apaga os arquivos gerados (`.o`, `.d`, executável) |
-| `make ajuda` | Lista os comandos e as versões de demonstração |
 
 O `make` só recompila os arquivos que mudaram. No Windows, use o MSYS2 com MinGW: o `Makefile` detecta o sistema e troca o nome das bibliotecas e do executável (`mine.exe`).
 
@@ -103,25 +102,6 @@ gcc -Iinclude src/*.c -o mine -lGLEW -lGL -lGLU -lglut -lm
 A coluna "Leitura" diz como cada entrada é tratada: ações contínuas, que duram enquanto a tecla está pressionada, são lidas **por estado** a cada quadro; ações discretas, que acontecem uma vez por toque, são tratadas **por evento**.
 
 O personagem começa no gramado, olhando para a montanha, com a câmera em terceira pessoa. Não há gravidade: para subir um degrau, use Espaço ou ↑. O mouse já começa controlando o olhar; Tab libera o cursor, e Tab ou um clique na janela o capturam de novo.
-
-## Versões de demonstração
-
-Algumas chaves em `include/config.h` trocam uma parte do código por uma versão "errada", para mostrar em sala o defeito que a versão final corrige. O jeito mais simples é passá-las ao `make`; ele recompila tudo sozinho quando elas mudam, e `make run` sem chaves volta à versão final. O título da janela mostra quais estão ativas.
-
-| Chave | Valores | O que demonstra | Valor entregue |
-|---|---|---|---|
-| `EXPERIMENTO_TIMER` | 0, 16 ou 50 | 16 e 50 simulam uma máquina rápida e uma lenta, atualizando por `glutTimerFunc` | 0 |
-| `USAR_DT` | 0 ou 1 | 0: passo fixo por quadro (velocidade depende do FPS); 1: velocidade × tempo de quadro | 1 |
-| `VERSAO_COLISAO` | 1 a 4 | 1: só o ponto central; 2: caixa inteira; 3: dois eixos juntos (trava na diagonal); 4: eixo a eixo (desliza) | 4 |
-| `LIMITAR_PITCH` | 0 ou 1 | 0: sem limite, a imagem inverte ao olhar para cima; 1: limitado a 89° | 1 |
-
-Exemplo, para comparar a velocidade numa máquina rápida e numa lenta sem o tempo de quadro:
-```bash
-make run USAR_DT=0 EXPERIMENTO_TIMER=16
-make run USAR_DT=0 EXPERIMENTO_TIMER=50
-```
-
-A versão original, com o movimento por evento de tecla (e a hesitação ao segurar a tecla), é o commit `5c4bbd3`.
 
 ## Como o cenário é montado
 

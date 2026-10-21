@@ -33,6 +33,5 @@ void rodaMouse(int roda, int direcao, int x, int y);
 
 /* atualização */
 void atualiza(void);
-void temporizador(int valor);
 
 #endif

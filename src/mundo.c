@@ -169,51 +169,13 @@ int alturaDoTerreno(int x, int z)
     return mapa[z][x];
 }
 
-/* ==================================================================
- * MUNDO: a matriz 3D que guarda o tipo de cada bloco
- *
- * O problema
- *   Até a semana 4 o mundo não ficava guardado em lugar nenhum: a cada
- *   quadro, desenhaCena() recalculava as colunas, a árvore e as nuvens e
- *   desenhava na hora. Isso basta para DESENHAR, mas não para responder
- *   "existe um bloco na posição (5, 3, 7)?", que é a pergunta de que a
- *   colisão precisa. O mapa de alturas também não basta: ele não sabe
- *   da árvore, das nuvens, nem de um bloco colocado no meio do ar.
- *
- * A teoria
- *   O espaço é discretizado numa grade regular: o mundo contínuo é
- *   dividido em células cúbicas de lado 1 (em inglês, voxels, "pixels de
- *   volume"), e cada célula guarda um número, o tipo do bloco que a
- *   ocupa, ou VAZIO. O bloco de índice (x, y, z) ocupa o cubo que vai de
- *   (x, y, z) até (x+1, y+1, z+1).
- *
- *   Daí sai a relação que a colisão inteira usa: a célula que contém um
- *   ponto qualquer (px, py, pz) é
- *
- *       (floor(px), floor(py), floor(pz))
- *
- *   ou seja, a coordenada do mundo arredondada para baixo JÁ É o índice
- *   da matriz. Não é preciso procurar o bloco: basta calcular onde ele
- *   estaria e olhar.
- *
- *   A matriz também separa DADO (o que existe no mundo) de DESENHO (como
- *   mostrar). O mesmo dado serve para desenhar, para a física e, no
- *   futuro, para quebrar e colocar blocos.
- *
- * Como o código produz o efeito
- *   mundo[x][y][z] tem LADO x ALTURA_MUNDO x LADO = 16 x 16 x 16 = 4096
- *   posições de um byte. ATENÇÃO à ordem: o mapa é [z][x] (para parecer
- *   o mundo visto de cima), mas mundo é [x][y][z], na ordem dos eixos.
- *   Para não confundir, todo acesso passa por colocaBloco() e
- *   blocoNoMundo(), que também testam os limites: em C, escrever fora de
- *   um vetor não dá erro, simplesmente estraga outra variável.
- *
- * Pergunta provável
- *   "Por que não guardar só o mapa de alturas e calcular o resto?"
- *   Porque a altura de uma coluna descreve apenas terreno maciço do chão
- *   para cima. A copa da árvore, as nuvens (blocos no ar, com vazio
- *   embaixo) e qualquer bloco colocado depois não cabem nessa descrição.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Matriz do mundo: o tipo de cada bloco, indexado como               */
+/* mundo[x][y][z] (o mapa é [z][x]). A célula que contém um ponto é   */
+/* (floor(x), floor(y), floor(z)), por isso a colisão é uma consulta  */
+/* direta à matriz. Todo acesso passa por colocaBloco() e             */
+/* blocoNoMundo(), que testam os limites.                             */
+/* ------------------------------------------------------------------ */
 
 unsigned char mundo[LADO][ALTURA_MUNDO][LADO];
 
@@ -340,32 +302,11 @@ void nuvemEm(int x, int z, int largura, int fundo)
             colocaBloco(NUVEM, x + dx, ALTURA_NUVEM, z + dz);
 }
 
-/* ==================================================================
- * CONSTRUIRMUNDO: preenche a matriz uma única vez, no início
- *
- * O problema
- *   O mundo não muda sozinho de um quadro para o outro. Recalcular as
- *   colunas, a árvore e as nuvens 60 vezes por segundo, como antes, era
- *   trabalho repetido sem resultado novo.
- *
- * A teoria
- *   É a separação clássica entre CONSTRUIR o estado (uma vez, ou quando
- *   algo muda) e CONSULTAR o estado (a cada quadro, para desenhar e para
- *   colidir). A função que constrói pode ser lenta e clara; as que
- *   consultam precisam ser rápidas.
- *
- * Como o código produz o efeito
- *   Zera a matriz (tudo VAZIO) e chama as mesmas funções de sempre:
- *   colunaEm() para as 16 x 16 colunas, arvoreEm() e nuvemEm(). Elas
- *   continuam com a mesma lógica; só trocaram blocoEm() (desenhar) por
- *   colocaBloco() (gravar). A ordem importa: a árvore vem depois do
- *   terreno e, se ocupasse a mesma célula, escreveria por cima.
- *
- * Pergunta provável
- *   "E se eu quiser quebrar um bloco durante o jogo?"
- *   Basta colocaBloco(VAZIO, x, y, z). O desenho e a colisão leem a
- *   matriz, então os dois passam a ver o buraco no quadro seguinte.
- * ================================================================== */
+/* ------------------------------------------------------------------ */
+/* Preenche a matriz uma vez, no início: zera tudo e coloca o         */
+/* terreno, a árvore e as nuvens. A árvore vem depois do terreno e    */
+/* escreve por cima.                                                  */
+/* ------------------------------------------------------------------ */
 
 void construirMundo(void)
 {
