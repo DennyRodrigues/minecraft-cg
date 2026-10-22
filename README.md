@@ -2,28 +2,20 @@
 
 Um cenário no estilo Minecraft feito em C com OpenGL no pipeline fixo, como material da disciplina de Computação Gráfica.
 
-O código está dividido por assunto, e cada arquivo é comentado para ser lido do começo ao fim:
+O código inteiro está em um único arquivo, [`mine.c`](mine.c), comentado para ser lido do começo ao fim. Ele é organizado em seções, nesta ordem:
 
-```
-minecraft-cg/
-├── Makefile          compilação (make, make run, make clean)
-├── README.md
-├── src/              código (.c)
-├── include/          cabeçalhos (.h)
-└── build/            gerado pelo make (.o, .d); não vai para o Git
-```
-
-| Arquivo | Conteúdo |
+| Seção | Conteúdo |
 |---|---|
-| [`src/main.c`](src/main.c) | Janela, registro dos callbacks, desenho do quadro e FPS |
-| [`include/config.h`](include/config.h) | Constantes do jogo |
-| [`include/graficos.h`](include/graficos.h) | Cabeçalhos do OpenGL, GLU e GLUT |
-| [`src/mundo.c`](src/mundo.c) / [`include/mundo.h`](include/mundo.h) | Mapa, matriz do mundo, construção e desenho dos blocos |
-| [`src/colisao.c`](src/colisao.c) / [`include/colisao.h`](include/colisao.h) | Posição do personagem e colisão com o mundo |
-| [`src/camera.c`](src/camera.c) / [`include/camera.h`](include/camera.h) | Projeção, direção do olhar, primeira e terceira pessoa, desenho do personagem |
-| [`src/entrada.c`](src/entrada.c) / [`include/entrada.h`](include/entrada.h) | Teclado, mouse, roda e atualização do movimento |
+| Constantes | Tipos de bloco, tamanho do mundo, medidas do personagem e da câmera |
+| Declarações antecipadas | Funções e variáveis usadas antes de serem definidas; servem de índice |
+| MUNDO | Mapa, matriz do mundo, construção e desenho dos blocos |
+| COLISÃO | Posição do personagem e colisão com o mundo |
+| CÂMERA | Projeção, direção do olhar, primeira e terceira pessoa, desenho do personagem |
+| ENTRADA | Teclado, mouse, roda e atualização do movimento |
+| MENU | Menu de pausa com as instruções (ESC) |
+| QUADRO E PROGRAMA PRINCIPAL | Desenho do quadro, FPS e `main` |
 
-O comentário MÓDULOS, no início de `src/main.c`, explica por que o código é dividido assim (compilação separada, `.h` com declarações e `.c` com definições, `extern`). As funções centrais têm um comentário antes delas explicando o que fazem e por quê.
+As funções centrais têm um comentário antes delas explicando o que fazem e por quê.
 
 ## O que tem no cenário
 
@@ -33,6 +25,8 @@ O comentário MÓDULOS, no início de `src/main.c`, explica por que o código é
 - Uma praia e o mar.
 - Uma árvore no formato do Minecraft.
 - Duas nuvens.
+- Um personagem no estilo do Minecraft, com braços e pernas que balançam ao andar.
+- Um menu de pausa (ESC) com as instruções de movimentação.
 
 Tudo é feito com **um único cubo de lado 1**, desenhado várias vezes em posições diferentes. Não há texturas nem iluminação: cada face recebe um brilho fixo (topo claro, laterais médias, base escura), o que dá a impressão de volume.
 
@@ -51,6 +45,8 @@ Tudo é feito com **um único cubo de lado 1**, desenhado várias vezes em posi�
 - Compilador C (`gcc`)
 - OpenGL, GLU, GLUT (freeglut) e GLEW
 
+É preciso usar a **freeglut**, não outra GLUT: a roda do mouse usa `glutMouseWheelFunc`, que é extensão da freeglut, e descer com Shift usa `GLUT_KEY_SHIFT_L`, das versões mais novas dela (testado com a 3.4).
+
 **Ubuntu / Debian**
 ```bash
 sudo apt install build-essential freeglut3-dev libglew-dev
@@ -65,21 +61,16 @@ sudo pacman -S gcc freeglut glew glu
 
 ## Como compilar e rodar
 
+**Linux**
 ```bash
-make run
+gcc mine.c -o mine -lGLEW -lGL -lGLU -lglut -lm
+./mine
 ```
 
-| Comando | O que faz |
-|---|---|
-| `make` | Compila e gera `./mine` |
-| `make run` | Compila, se precisar, e roda |
-| `make clean` | Apaga os arquivos gerados (`.o`, `.d`, executável) |
-
-O `make` só recompila os arquivos que mudaram. No Windows, use o MSYS2 com MinGW: o `Makefile` detecta o sistema e troca o nome das bibliotecas e do executável (`mine.exe`).
-
-Sem o `make`, o comando equivalente no Linux é:
+**Windows (MinGW)**
 ```bash
-gcc -Iinclude src/*.c -o mine -lGLEW -lGL -lGLU -lglut -lm
+gcc mine.c -o mine.exe -lglew32 -lfreeglut -lopengl32 -lglu32
+mine.exe
 ```
 
 ## Controles
