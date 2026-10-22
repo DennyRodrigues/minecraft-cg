@@ -25,6 +25,7 @@ Deslocamento da câmera, giro contínuo, aceleração.
     • Documentação da API da freeglut, seções de funções de resposta e de glutGet, material em inglês: https://freeglut.sourceforge.net/docs/api.php
 2. Bloco 2, mouse e orientação da câmera (19h25 às 19h50, 25 min)
 Segundo bloco teórico, que conecta a entrada do mouse ao modelo de câmera da semana anterior.
+
 2.1 Conteúdo
     • A posição do cursor é informada em coordenadas de tela, com origem no canto superior esquerdo e eixo vertical crescendo para baixo, ao contrário das coordenadas normalizadas vistas na semana 2. Convém registrar o contraste, pois a inversão do eixo vertical é fonte recorrente de visada invertida.
     • A GLUT distingue o movimento com botão pressionado, tratado por glutMotionFunc, do movimento sem botão, tratado por glutPassiveMotionFunc. Para uma câmera que acompanha o mouse livremente, as duas funções devem ser registradas, ou a visada congela enquanto um botão estiver pressionado.

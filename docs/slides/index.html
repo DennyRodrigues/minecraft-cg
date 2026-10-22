@@ -22,11 +22,9 @@
   <main id="presentation-viewport">
     <div id="slides-container">
 
-      <!-- ====================================================================
-           SLIDE 01: CAPA
-           ==================================================================== -->
-      <section class="slide slide-dark slide-cover active" id="slide-1">
-        <svg class="bg-watermark bg-pos-top-right" viewBox="0 0 340 300" width="340" height="300" fill="none" stroke="currentColor" stroke-width="1">
+      <!-- S1 -->
+      <section class="slide slide-dark slide-cover active">
+        <svg class="bg-watermark bg-watermark-top-right" viewBox="0 0 340 300" width="340" height="300" fill="none" stroke="currentColor" stroke-width="1">
           <path d="M230 40 L290 75 L290 145 L230 180 L170 145 L170 75 Z"/>
           <path d="M230 40 L230 110 L290 75"/>
           <path d="M230 110 L170 75"/>
@@ -38,558 +36,1492 @@
         </svg>
 
         <div class="cover-content">
-          <div style="margin-bottom: 24px;">
-            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <div class="cover-discipline-line">
+            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2.5 L20.5 7.4 L20.5 17.2 L12 22 L3.5 17.2 L3.5 7.4 Z"/>
               <path d="M12 2.5 L12 12.2 L20.5 7.4"/>
               <path d="M12 12.2 L3.5 7.4"/>
               <path d="M12 12.2 L12 22"/>
             </svg>
+            <span>Semana 5 • Computação Gráfica</span>
           </div>
 
           <h1 class="cover-title">Controle por Teclado e Mouse, Movimentação e Colisão</h1>
           <div class="cover-divider"></div>
-          <p class="cover-subtitle">Entrada interativa em tempo real, tempo de quadro independente, orientação tridimensional e detecção AABB em mundos voxel.</p>
+          <p class="cover-subtitle">Entrada por evento e por estado, tempo de quadro, orientação por yaw e pitch, colisão com a matriz do mundo e câmera em primeira e terceira pessoa.</p>
 
-          <p class="cover-meta-clean">
-            Computação Gráfica • Ciência da Computação • UNIFAP
-          </p>
+          <p class="cover-meta-clean">Ciência da Computação • UNIFAP</p>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">01 / 12</div>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
+      <!-- S2 -->
+      <section class="slide slide-dark slide-video">
+        <div class="video-frame video-frame-full">
+          <video src="v1-versao-1.mp4" controls preload="metadata" playsinline></video>
+          <div class="video-missing-msg">Vídeo V1 não encontrado.<br>Coloque o arquivo v1-versao-1.mp4 ao lado do index.html.</div>
+        </div>
+      </section>
 
-      <!-- ====================================================================
-           SLIDE 02: ROTEIRO
-           ==================================================================== -->
-      <section class="slide" id="slide-2">
+      <!-- S3 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 01 • Pergunta</span></div>
+          <h2 class="question-title">Dos problemas que vocês acabaram de ver, quais têm a mesma causa?</h2>
+          <p class="question-prompt">Hesitação, velocidade que varia, sem diagonal, atravessa tudo, só primeira pessoa.</p>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S4 -->
+      <section class="slide">
         <header class="slide-header">
-          <h2 class="header-title">Roteiro da Aula em 5 Etapas</h2>
+          <h2 class="header-title">Três Defeitos, Mesma Origem</h2>
         </header>
 
         <div class="slide-body">
-          <div class="timeline-agenda">
-            <div class="timeline-step active">
-              <div class="timeline-step-header">
-                <span class="timeline-num">01</span>
-                <svg class="tech-icon icon-primary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="2" y="3" width="20" height="13" rx="1.5"/>
-                  <line x1="8" y1="20" x2="16" y2="20"/>
-                  <line x1="12" y1="16" x2="12" y2="20"/>
-                </svg>
-              </div>
-              <span class="timeline-time">25 min</span>
-              <h3 class="timeline-title">Fundamentação</h3>
-              <p class="timeline-desc">Fila do SO, laço da GLUT e evento vs estado.</p>
-            </div>
-
-            <div class="timeline-step">
-              <div class="timeline-step-header">
-                <span class="timeline-num">02</span>
-                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="6" y="3" width="12" height="18" rx="6"/>
-                  <line x1="12" y1="7" x2="12" y2="10"/>
-                </svg>
-              </div>
-              <span class="timeline-time">25 min</span>
-              <h3 class="timeline-title">Mouse e Câmera</h3>
-              <p class="timeline-desc">Warp pointer e ângulos de yaw e pitch.</p>
-            </div>
-
-            <div class="timeline-step">
-              <div class="timeline-step-header">
-                <span class="timeline-num">03</span>
-                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="2" y="5" width="20" height="14" rx="2"/>
-                  <line x1="7" y1="14" x2="17" y2="14"/>
-                </svg>
-              </div>
-              <span class="timeline-time">15 min</span>
-              <h3 class="timeline-title">Prática Teclado</h3>
-              <p class="timeline-desc">Vetor booleano e desativação de repetição.</p>
-            </div>
-
-            <div class="timeline-step">
-              <div class="timeline-step-header">
-                <span class="timeline-num">04</span>
-                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <line x1="9" y1="3" x2="9" y2="21"/>
-                  <line x1="3" y1="9" x2="21" y2="9"/>
-                </svg>
-              </div>
-              <span class="timeline-time">20 min</span>
-              <h3 class="timeline-title">Colisão AABB</h3>
-              <p class="timeline-desc">Consulta à matriz e deslize de parede.</p>
-            </div>
-
-            <div class="timeline-step">
-              <div class="timeline-step-header">
-                <span class="timeline-num">05</span>
-                <svg class="tech-icon icon-secondary" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <circle cx="12" cy="12" r="3"/>
-                  <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
-                </svg>
-              </div>
-              <span class="timeline-time">35 min</span>
-              <h3 class="timeline-title">1ª e 3ª Pessoa</h3>
-              <p class="timeline-desc">gluLookAt, zoom e integração no projeto.</p>
-            </div>
+          <div class="table-wrapper">
+            <table class="academic-table">
+              <thead>
+                <tr><th>Problema</th><th class="table-col-36">Origem</th><th class="table-col-20">Onde resolvemos</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Hesitação ao segurar a tecla</td><td><strong>Leitura da entrada</strong></td><td>Blocos 1 e 3</td></tr>
+                <tr><td>Velocidade que varia com a máquina</td><td><strong>Leitura da entrada</strong></td><td>Blocos 1 e 3</td></tr>
+                <tr><td>Sem movimento diagonal</td><td><strong>Leitura da entrada</strong></td><td>Bloco 3</td></tr>
+                <tr><td>Atravessa tudo</td><td class="text-muted">Funcionalidade nova: colisão</td><td>Bloco 4</td></tr>
+                <tr><td>Só primeira pessoa</td><td class="text-muted">Funcionalidade nova: terceira pessoa</td><td>Bloco 5</td></tr>
+              </tbody>
+            </table>
           </div>
+          <p class="quote-line">"Três defeitos, mesma origem. Vamos entender o porquê."</p>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">02 / 12</div>
+          <span class="footer-label">Bloco 1 • Abertura</span>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
-
-      <!-- ====================================================================
-           SLIDE 03: TRANSIÇÃO BLOCO 1
-           ==================================================================== -->
-      <section class="slide slide-dark slide-section" id="slide-3">
-        <svg class="bg-watermark bg-pos-top-right" viewBox="0 0 340 260" width="340" height="260" fill="none" stroke="currentColor" stroke-width="1">
-          <rect x="70" y="20" width="230" height="150" rx="4"/>
-          <rect x="85" y="35" width="200" height="120" rx="2" stroke-dasharray="4 4"/>
-          <line x1="140" y1="170" x2="140" y2="210"/>
-          <line x1="230" y1="170" x2="230" y2="210"/>
-        </svg>
-
-        <div class="section-content">
-          <div class="section-block-num">
-            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <line x1="8" y1="21" x2="16" y2="21"/>
-              <line x1="12" y1="17" x2="12" y2="21"/>
-            </svg>
-            <span>Bloco 01 • Teoria</span>
-          </div>
-
-          <h2 class="section-title">Fundamentação Teórica da Entrada Interativa</h2>
-          <div class="section-divider"></div>
-          <p class="section-desc">
-            A forma como a entrada é processada organiza a lógica e a fluidez do jogo inteiro.
-          </p>
-        </div>
-
-        <footer class="slide-footer">
-          <div class="footer-slide-num">03 / 12</div>
-        </footer>
-      </section>
-
-
-      <!-- ====================================================================
-           SLIDE 04: PERGUNTA 01 (Hesitação do Teclado)
-           ==================================================================== -->
-      <section class="slide slide-dark slide-question" id="slide-4">
-        <div class="question-content">
-          <div class="question-badge">
-            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="9"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <circle cx="12" cy="16" r="0.75" fill="currentColor"/>
-            </svg>
-            <span>Pergunta 01 • Comportamento do Teclado</span>
-          </div>
-
-          <h2 class="question-title">
-            Pressionar uma tecla gera um único evento — mas o movimento precisa durar enquanto ela estiver pressionada. A solução óbvia é mover o personagem direto no callback de teclado. Ao testar, algo inesperado acontece.
-          </h2>
-
-          <p class="question-prompt">
-            Segurando 'W': um passo, pausa de ~500 ms, e só então movimento contínuo — igual a segurar uma letra num editor de texto. De onde vem esse atraso, e como evitá-lo num jogo?
-          </p>
-        </div>
-
-        <footer class="slide-footer">
-          <div class="footer-slide-num">04 / 12</div>
-        </footer>
-      </section>
-
-
-      <!-- ====================================================================
-           SLIDE 05: RESPOSTA 01 + EXPLICAÇÃO (Repetição do SO & Estado)
-           ==================================================================== -->
-      <section class="slide" id="slide-5">
+      <!-- S5 -->
+      <section class="slide">
         <header class="slide-header">
-          <h2 class="header-title">Repetição de Tecla do SO vs Leitura por Estado</h2>
+          <h2 class="header-title">1.1 Como a Entrada Chega à Aplicação</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="diagram-container" style="height: auto;">
+            <svg viewBox="0 0 1100 110" width="100%" height="110" fill="none" font-family="Inter, sans-serif">
+              <g style="stroke: var(--color-primary);" stroke-width="1.5">
+                <rect x="10" y="20" width="220" height="64" rx="3" style="fill: var(--color-background);"/>
+                <rect x="290" y="20" width="220" height="64" rx="3" style="fill: var(--color-background);"/>
+                <rect x="570" y="20" width="220" height="64" rx="3" style="fill: var(--color-background);"/>
+                <rect x="850" y="20" width="240" height="64" rx="3" style="fill: var(--color-callout-bg);"/>
+              </g>
+              <g style="stroke: var(--color-accent);" stroke-width="1.5">
+                <line x1="232" y1="52" x2="282" y2="52"/><polyline points="276,47 283,52 276,57"/>
+                <line x1="512" y1="52" x2="562" y2="52"/><polyline points="556,47 563,52 556,57"/>
+                <line x1="792" y1="52" x2="842" y2="52"/><polyline points="836,47 843,52 836,57"/>
+              </g>
+              <g font-size="16" text-anchor="middle" style="fill: var(--color-graphite);">
+                <text x="120" y="57">Usuário aperta W</text>
+                <text x="400" y="57">Fila do SO</text>
+                <text x="680" y="57">glutMainLoop esvazia a fila</text>
+                <text x="970" y="49">Função registrada</text>
+                <text x="970" y="69">pela aplicação é chamada</text>
+              </g>
+            </svg>
+            <span class="diagram-caption">A entrada não chega no instante em que o usuário age: o sistema operacional a acumula em uma fila.</span>
+          </div>
+
+          <div class="grid-2 space-top-md" style="height: auto;">
+            <div class="col-clean">
+              <p class="inline-question"><strong>Pergunta:</strong> "Quem escreve o <span class="code-inline">while(true)</span> do jogo de vocês?"</p>
+            </div>
+            <div class="callout">
+              <strong>Na GLUT, não.</strong> Quem escreve o laço principal é o <span class="code-inline">glutMainLoop</span>. A aplicação registra funções e reage a eventos: inversão de controle. O framework chama o seu código, não o contrário.
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 1 • 1.1</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S6 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">1.2 Evento e Estado: a Distinção que Explica Tudo</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2" style="height: auto;">
+            <div class="col-clean">
+              <div class="col-block col-block-primary">
+                <div class="col-title">Por evento</div>
+                <p>A tecla é pressionada e dispara uma função, uma vez.</p>
+                <p class="inline-question" style="margin-top: 6px;"><strong>Pergunta:</strong> "Abrir um menu ao pressionar ESC?" <span class="text-muted">Evento.</span></p>
+              </div>
+              <div class="col-block col-block-accent space-top-md">
+                <div class="col-title">Por estado</div>
+                <p>A cada quadro, verifica-se se a tecla está ativa naquele instante.</p>
+                <p class="inline-question" style="margin-top: 6px;"><strong>Pergunta:</strong> "Andar enquanto seguro W?" <span class="text-muted">Estado: o movimento precisa durar.</span></p>
+              </div>
+            </div>
+            <div class="col-clean">
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 88, 115 e 434</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body" data-lang="c"><code>/* em teclado(): o evento de pressionar liga */
+teclas[tolower(tecla)] = 1;             /* estado: para as ações contínuas */
+
+/* em tecladoSolto(): o evento de soltar desliga */
+teclas[tolower(tecla)] = 0;
+
+/* em atualiza(), a cada quadro: age enquanto estiver ativo */
+float frente = (float)(teclas['w'] - teclas['s']);</code></pre>
+</div>
+              <p class="quote-line">"Estado é sempre memória: o vetor <span class="code-inline">teclas[]</span> lembra os eventos passados."</p>
+            </div>
+          </div>
+
+          <div class="table-wrapper space-top-md">
+            <table class="academic-table compact">
+              <thead>
+                <tr><th class="table-col-20">Forma de leitura</th><th class="table-col-36">Adequada para</th><th>Exemplos na disciplina</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Por evento</strong></td><td>Ações discretas, uma vez por toque</td><td>Alternar 1ª e 3ª pessoa, alternar projeção, abrir o menu, liberar o cursor</td></tr>
+                <tr><td><strong>Por estado</strong></td><td>Ações contínuas, enquanto a tecla estiver pressionada</td><td>Deslocamento, giro contínuo, aceleração (correr com R)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 1 • 1.2</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S7 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">1.3 Por Que a Hesitação Acontece</h2>
         </header>
 
         <div class="slide-body">
           <div class="grid-2">
             <div class="col-clean">
-              <ul class="tech-list">
-                <li>
-                  <strong>Atraso de texto:</strong> O sistema operacional impõe um atraso inicial na repetição para evitar letras duplicadas na digitação normal.
-                </li>
-                <li>
-                  <strong>Desativar repetição:</strong> Em jogos, a repetição automática deve ser desligada com <span class="code-inline">glutIgnoreKeyRepeat(1)</span>.
-                </li>
-                <li>
-                  <strong>Construir estado:</strong> A aplicação cria seu próprio vetor booleano <span class="code-inline">teclas[256]</span> marcado como ativo no pressionar e inativo no soltar.
-                </li>
+              <p class="inline-question" style="margin-top: 0;"><strong>Pergunta:</strong> "Quando vocês seguraram uma tecla no editor de texto e a letra repetiu, houve uma pausa antes de começar a repetir, lembram?"</p>
+              <ul class="tech-list space-top-md">
+                <li>O atraso inicial e a cadência da repetição são definidos pelo sistema operacional, pensados para digitação de texto.</li>
+                <li class="warn">Se o movimento vive dentro do callback de teclado, ele herda esse atraso e essa cadência.</li>
               </ul>
             </div>
 
             <div class="col-clean">
-              <div class="callout">
-                <strong>Por Evento (Discreto):</strong> Ações únicas por toque — alternar câmera (<span class="code-inline">F5</span>), projeção (<span class="code-inline">P</span>), pausa (<span class="code-inline">ESC</span>).
-              </div>
+              <div class="col-clean-title"><span>O que resolve é o estado</span></div>
+              <ul class="tech-list">
+                <li>Com <span class="code-inline">teclas[]</span> guiando o movimento no <span class="code-inline">glutIdleFunc</span>, a repetição não acrescenta informação: só reescreve <span class="code-inline">teclas[k] = 1</span>.</li>
+                <li><span class="code-inline">glutIgnoreKeyRepeat(1)</span> a desativa, como limpeza.</li>
+                <li><span class="code-inline">glutKeyboardUpFunc</span> registra a soltura e zera o estado.</li>
+              </ul>
               <div class="callout space-top-sm">
-                <strong>Por Estado (Contínuo):</strong> Ações que duram enquanto a tecla estiver segura — andar (<span class="code-inline">W, A, S, D</span>), correr (<span class="code-inline">R</span>).
+                <strong>Diagonal:</strong> duas teclas ativas são só dois valores 1 no vetor. Pela repetição do SO não funciona: em geral ela vale só para a última tecla pressionada.
               </div>
             </div>
           </div>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">05 / 12</div>
+          <span class="footer-label">Bloco 1 • 1.3</span>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
-
-      <!-- ====================================================================
-           SLIDE 06: DELTA TIME E MOVIMENTO
-           ==================================================================== -->
-      <section class="slide" id="slide-6">
-        <header class="slide-header">
-          <h2 class="header-title">Tempo de Quadro e Movimento Independente</h2>
-        </header>
-
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="col-clean">
-              <div class="callout-alert callout">
-                <strong>O Erro do Deslocamento Fixo:</strong> Somar passo fixo por quadro faz a câmera andar o dobro da velocidade em 120 FPS se comparado a 60 FPS.
-              </div>
-
-              <ul class="tech-list space-top-sm">
-                <li>
-                  <span class="code-inline">glutGet(GLUT_ELAPSED_TIME)</span> fornece milissegundos decorridos.
-                </li>
-                <li>
-                  <strong>Delta Time (dt):</strong> <span class="code-inline">dt = (atual - anterior) / 1000.0f</span>.
-                </li>
-                <li>
-                  Multiplicar a velocidade por <code>dt</code> torna o movimento idêntico em qualquer taxa de quadros.
-                </li>
-              </ul>
-            </div>
-
-            <div class="code-block">
-              <div class="code-header">
-                <span>src/main.c</span>
-                <span class="code-lang-tag">Linguagem C</span>
-              </div>
-              <pre class="code-body"><code><span class="c-kw">static void</span> <span class="c-fn">ao_ficar_ocioso</span>(<span class="c-kw">void</span>) {
-    <span class="c-kw">static int</span> t_ant = <span class="c-num">0</span>;
-    <span class="c-kw">int</span> t_atual = <span class="c-fn">glutGet</span>(GLUT_ELAPSED_TIME);
-    <span class="c-kw">if</span> (t_ant == <span class="c-num">0</span>) { t_ant = t_atual; <span class="c-kw">return</span>; }
-
-    <span class="c-kw">float</span> dt = (t_atual - t_ant) / <span class="c-num">1000.0f</span>;
-    t_ant = t_atual;
-
-    <span class="c-fn">atualizar_personagem</span>(dt);
-    <span class="c-fn">glutPostRedisplay</span>();
-}</code></pre>
-            </div>
-          </div>
-        </div>
-
-        <footer class="slide-footer">
-          <div class="footer-slide-num">06 / 12</div>
-        </footer>
-      </section>
-
-
-      <!-- ====================================================================
-           SLIDE 07: MOUSE E ORIENTAÇÃO
-           ==================================================================== -->
-      <section class="slide" id="slide-7">
-        <header class="slide-header">
-          <h2 class="header-title">Mouse, Captura Virtual e Limite de Pitch</h2>
-        </header>
-
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="col-clean">
-              <div class="col-clean-title">
-                <span>Captura Virtual do Cursor</span>
-              </div>
-              <ul class="tech-list">
-                <li>
-                  <span class="code-inline">glutSetCursor(GLUT_CURSOR_NONE)</span>: Oculta o cursor.
-                </li>
-                <li>
-                  <span class="code-inline">glutWarpPointer(cx, cy)</span>: Devolve o cursor ao centro a cada leitura, permitindo giro contínuo.
-                </li>
-                <li>
-                  O deslocamento é medido sempre em relação ao centro da janela, anulando o evento provocado pelo reposicionamento.
-                </li>
-              </ul>
-            </div>
-
-            <div class="col-clean">
-              <div class="col-clean-title">
-                <span>Trava de Inclinação (Pitch Clamp)</span>
-              </div>
-              <ul class="tech-list">
-                <li>
-                  Em $90^\circ$, o vetor de olhar torna-se colinear ao vetor <span class="code-inline">Up (0, 1, 0)</span> de <span class="code-inline">gluLookAt</span>.
-                </li>
-                <li>
-                  O produto vetorial colapsa ($0$), causando inversão abrupta da cena.
-                </li>
-                <li class="warn">
-                  Solução: Limitar o pitch a no máximo $\pm 89^\circ$.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <footer class="slide-footer">
-          <div class="footer-slide-num">07 / 12</div>
-        </footer>
-      </section>
-
-
-      <!-- ====================================================================
-           SLIDE 08: PERGUNTA 02 (Travamento em Diagonal)
-           ==================================================================== -->
-      <section class="slide slide-dark slide-question" id="slide-8">
+      <!-- S8 -->
+      <section class="slide slide-dark slide-question">
         <div class="question-content">
-          <div class="question-badge">
-            <svg class="tech-icon icon-accent" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="9"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <circle cx="12" cy="16" r="0.75" fill="currentColor"/>
-            </svg>
-            <span>Pergunta 02 • Física de Colisão</span>
-          </div>
-
-          <h2 class="question-title">
-            Implementamos a colisão testando a nova posição antes de mover — colisões diretas funcionam. Mas ao caminhar em diagonal contra uma parede, o personagem para completamente.
-          </h2>
-
-          <p class="question-prompt">
-            Segurando W + D rumo a um bloco, há claramente espaço para deslizar ao longo da superfície. Por que o código bloqueia os dois eixos de uma vez?
-          </p>
+          <div class="question-badge"><span>Bloco 01 • Pergunta • 1.4</span></div>
+          <h2 class="question-title">Se eu somar 0,1 ao X do personagem a cada quadro, o que acontece em uma máquina de 120 FPS comparada a uma de 30 FPS?</h2>
+          <p class="question-prompt">Mesmo código, mesma tecla, duas máquinas.</p>
         </div>
-
         <footer class="slide-footer">
-          <div class="footer-slide-num">08 / 12</div>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
-
-      <!-- ====================================================================
-           SLIDE 09: RESPOSTA 02 + EXPLICAÇÃO (Deslize Eixo a Eixo e AABB)
-           ==================================================================== -->
-      <section class="slide" id="slide-9">
+      <!-- S9 -->
+      <section class="slide">
         <header class="slide-header">
-          <h2 class="header-title">Colisão com a Matriz e Deslize Eixo a Eixo</h2>
+          <h2 class="header-title">1.4 Movimento Escalado pelo Tempo de Quadro</h2>
         </header>
 
         <div class="slide-body">
           <div class="grid-2">
-            <!-- Diagrama SVG -->
+            <div class="col-clean">
+              <div class="callout callout-alert" style="margin-top: 0;">
+                <strong>Anda 4 vezes mais rápido.</strong> O movimento está amarrado à taxa de quadros.
+              </div>
+              <p class="space-top-sm">A correção é multiplicar a velocidade pelo tempo que o quadro levou, o <em>delta time</em>:</p>
+              <div class="formula">
+                deslocamento = velocidade × <var>dt</var><br>
+                <var>dt</var> = <span class="frac"><span><var>t</var><sub>atual</sub> − <var>t</var><sub>anterior</sub></span><span>1000</span></span>
+              </div>
+            </div>
+
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li><span class="code-inline">glutGet(GLUT_ELAPSED_TIME)</span> informa milissegundos desde o início do programa.</li>
+                <li>A atualização acontece em <span class="code-inline">glutIdleFunc</span> e termina com <span class="code-inline">glutPostRedisplay</span>.</li>
+              </ul>
+              <div class="table-wrapper space-top-sm">
+                <table class="academic-table compact">
+                  <thead><tr><th>Velocidade 5</th><th>dt</th><th>Por quadro</th><th>Em 1 s</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>60 FPS</strong></td><td>0,017 s</td><td>0,083</td><td>5</td></tr>
+                    <tr><td><strong>20 FPS</strong></td><td>0,05 s</td><td>0,25</td><td>5</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="quote-line">"Notebook de 2010 ou workstation: o personagem anda na mesma velocidade."</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 1 • 1.4</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S10 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 02 • Mouse e orientação da câmera</span></div>
+          <h2 class="question-title">O mouse devolve x e y em pixels. O que precisamos calcular a partir disso para girar a câmera?</h2>
+          <p class="question-prompt">Dica: não é a posição.</p>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S11 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">2.1 e 2.3 Coordenadas de Tela e o Eixo Y</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
             <div class="diagram-container">
-              <svg viewBox="0 0 320 200" width="100%" height="160" fill="none">
-                <rect x="20" y="20" width="60" height="60" stroke="var(--color-diagram-grid)" stroke-width="1"/>
-                <rect x="80" y="20" width="60" height="60" stroke="var(--color-diagram-grid)" stroke-width="1"/>
-                <rect x="140" y="20" width="60" height="60" stroke="var(--color-diagram-grid)" stroke-width="1"/>
-                <rect x="80" y="80" width="60" height="60" fill="var(--color-diagram-wall)" stroke="var(--color-diagram-wall-stroke)" stroke-width="1.5"/>
-                <text x="96" y="115" font-family="var(--font-mono)" font-size="11" fill="var(--color-secondary)">PAREDE</text>
-                <rect x="148" y="90" width="36" height="42" fill="var(--color-diagram-box)" stroke="var(--color-diagram-box-stroke)" stroke-width="1.5" stroke-dasharray="3 2"/>
-                <circle cx="166" cy="111" r="2.5" fill="var(--color-primary)"/>
-                <line x1="148" y1="111" x2="135" y2="111" stroke="var(--color-accent)" stroke-width="1.5"/>
-                <line x1="166" y1="90" x2="166" y2="65" stroke="var(--color-primary)" stroke-width="1.5"/>
-                <polyline points="163,70 166,63 169,70" stroke="var(--color-primary)" stroke-width="1.5"/>
+              <svg viewBox="0 0 460 210" width="100%" height="210" fill="none" font-family="IBM Plex Mono, monospace" font-size="12">
+                <!-- Tela -->
+                <rect x="20" y="30" width="180" height="140" style="stroke: var(--color-secondary);" stroke-width="1.5"/>
+                <circle cx="20" cy="30" r="3.5" style="fill: var(--color-accent);"/>
+                <g style="stroke: var(--color-accent);" stroke-width="1.5">
+                  <line x1="20" y1="30" x2="90" y2="30"/><polyline points="84,26 91,30 84,34"/>
+                  <line x1="20" y1="30" x2="20" y2="100"/><polyline points="16,94 20,101 24,94"/>
+                </g>
+                <g style="fill: var(--color-graphite);">
+                  <text x="26" y="22">(0, 0)</text>
+                  <text x="96" y="34">x</text>
+                  <text x="26" y="110">y cresce para baixo</text>
+                  <text x="20" y="196" style="fill: var(--color-secondary);">Coordenadas de tela</text>
+                </g>
+                <!-- NDC -->
+                <rect x="260" y="30" width="180" height="140" style="stroke: var(--color-secondary);" stroke-width="1.5"/>
+                <g style="stroke: var(--color-primary);" stroke-width="1.5">
+                  <line x1="260" y1="100" x2="440" y2="100"/><polyline points="434,96 441,100 434,104"/>
+                  <line x1="350" y1="170" x2="350" y2="30"/><polyline points="346,36 350,29 354,36"/>
+                </g>
+                <circle cx="350" cy="100" r="3.5" style="fill: var(--color-primary);"/>
+                <g style="fill: var(--color-graphite);">
+                  <text x="356" y="116">(0, 0)</text>
+                  <text x="358" y="42">y cresce para cima</text>
+                  <text x="260" y="196" style="fill: var(--color-secondary);">Normalizadas (semana 2)</text>
+                </g>
               </svg>
-              <span class="diagram-caption">Teste X bloqueia + Teste Z passa = Deslize rente à parede</span>
+              <span class="diagram-caption">A inversão do eixo vertical é fonte recorrente de visada invertida.</span>
             </div>
 
-            <!-- Explicação -->
             <div class="col-clean">
-              <ul class="tech-list">
-                <li>
-                  <strong>Consulta O(1):</strong> <span class="code-inline">(int)floor(coord)</span> acessa diretamente os índices da matriz tridimensional.
-                </li>
-                <li>
-                  <strong>Deslize de parede:</strong> O deslocamento é testado primeiro em $X$. Se colidir, cancela-se apenas $\Delta x$. O teste em $Z$ é avaliado em seguida.
-                </li>
-                <li class="warn">
-                  <strong>Tunelamento:</strong> Saltos grandes de <code>dt</code> podem atravessar paredes; mitigado aplicando <em>clamp</em> de segurança no tempo de quadro.
-                </li>
+              <div class="callout" style="margin-top: 0;"><strong>Não é a posição, é o deslocamento.</strong></div>
+              <ul class="tech-list space-top-sm">
+                <li>Origem no canto superior esquerdo, eixo vertical crescendo para baixo: o contrário das coordenadas normalizadas.</li>
+                <li class="warn">Sem tratar, mover o mouse para cima olha para baixo. Correção: inverter o sinal do deslocamento em Y ao atualizar o pitch.</li>
+                <li><span class="code-inline">glutMotionFunc</span>: movimento com botão pressionado.</li>
+                <li><span class="code-inline">glutPassiveMotionFunc</span>: movimento sem botão.</li>
+                <li class="warn">Registre as duas. Com só uma, a visada congela enquanto um botão estiver pressionado.</li>
               </ul>
             </div>
           </div>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">09 / 12</div>
+          <span class="footer-label">Bloco 2 • 2.1 e 2.3</span>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
+      <!-- S12 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 02 • Pergunta • 2.1</span></div>
+          <h2 class="question-title">Se o usuário arrasta o mouse para a direita sem parar, o que acontece com o cursor depois de uns 3 segundos?</h2>
+          <p class="question-prompt">E como resolver sem prender o cursor no SO, algo que a GLUT não suporta?</p>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
 
-      <!-- ====================================================================
-           SLIDE 10: CÂMERA 1ª E 3ª PESSOA & ZOOM
-           ==================================================================== -->
-      <section class="slide" id="slide-10">
+      <!-- S13 -->
+      <section class="slide">
         <header class="slide-header">
-          <h2 class="header-title">Câmera em 1ª e 3ª Pessoa e Zoom por FOV</h2>
+          <h2 class="header-title">Captura Virtual do Cursor</h2>
         </header>
 
         <div class="slide-body">
           <div class="grid-2">
             <div class="col-clean">
-              <div class="col-clean-title">
-                <span>Primeira vs Terceira Pessoa</span>
-              </div>
-              <ul class="tech-list">
-                <li>
-                  Compartilham os mesmos ângulos de <em>yaw</em> e <em>pitch</em> e a mesma lógica de movimento.
-                </li>
-                <li>
-                  <strong>1ª Pessoa:</strong> Câmera nos olhos do avatar; o personagem não é desenhado.
-                </li>
-                <li>
-                  <strong>3ª Pessoa:</strong> Câmera recuada e elevada; o personagem é desenhado na cena.
-                </li>
-              </ul>
+              <div class="callout callout-alert" style="margin-top: 0;"><strong>Sai da janela e o movimento para.</strong></div>
+              <ol class="tech-steps space-top-md">
+                <li>Esconder o cursor com <span class="code-inline">glutSetCursor(GLUT_CURSOR_NONE)</span>.</li>
+                <li>A cada movimento, calcular o deslocamento em relação ao <strong>centro da janela</strong>, não à última posição.</li>
+                <li>Devolver o cursor ao centro com <span class="code-inline">glutWarpPointer(cx, cy)</span>.</li>
+                <li>O evento gerado pelo próprio reposicionamento resulta em deslocamento nulo e não interfere no giro.</li>
+              </ol>
             </div>
 
             <div class="col-clean">
-              <div class="col-clean-title">
-                <span>Zoom por Campo de Visão</span>
+              <div class="callout callout-alert" style="margin-top: 0;">
+                <strong>Atenção:</strong> a captura precisa de uma tecla de liberação (no projeto, <span class="code-inline">TAB</span>), que captura e libera o cursor. Sem ela, o usuário não consegue sair da janela.
               </div>
+              <div class="col-clean-title space-top-md"><span>Exemplo: janela de 1024 × 768</span></div>
               <ul class="tech-list">
-                <li>
-                  A roda do mouse (<span class="code-inline">glutMouseWheelFunc</span>) ajusta o <span class="code-inline">FOV</span> em <span class="code-inline">gluPerspective</span>.
-                </li>
-                <li>
-                  Aproxima a imagem trocando a abertura da lente sem mover a posição física da câmera.
-                </li>
+                <li>Centro em <span class="code-inline">(512, 384)</span>; o mouse vai para <span class="code-inline">(522, 384)</span>.</li>
+                <li><span class="code-inline">dx = 10</span>: com 0,1° por pixel, o yaw aumenta 1°.</li>
+                <li>O cursor volta a <span class="code-inline">(512, 384)</span>; o evento desse reposicionamento chega com deslocamento 0 e é descartado.</li>
               </ul>
             </div>
           </div>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">10 / 12</div>
+          <span class="footer-label">Bloco 2 • 2.1</span>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
-
-      <!-- ====================================================================
-           SLIDE 11: TABELA DE REFERÊNCIA GLUT
-           ==================================================================== -->
-      <section class="slide" id="slide-11">
+      <!-- S14 -->
+      <section class="slide">
         <header class="slide-header">
-          <h2 class="header-title">Quadro de Referência da Entrada na GLUT</h2>
+          <h2 class="header-title">2.2 Yaw e Pitch: Dois Ângulos, um Olhar</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="diagram-container">
+              <svg viewBox="0 0 460 220" width="100%" height="220" fill="none" font-family="IBM Plex Mono, monospace" font-size="12">
+                <!-- Vista de cima: yaw -->
+                <g style="stroke: var(--color-secondary);" stroke-width="1">
+                  <line x1="20" y1="150" x2="200" y2="150"/>
+                  <line x1="90" y1="190" x2="90" y2="20"/>
+                </g>
+                <g style="stroke: var(--color-primary);" stroke-width="1.75">
+                  <line x1="90" y1="150" x2="160" y2="50"/><polyline points="151,53 161,49 160,60"/>
+                </g>
+                <path d="M90 90 A60 60 0 0 1 124 101" style="stroke: var(--color-accent);" stroke-width="1.5"/>
+                <circle cx="90" cy="150" r="4" style="fill: var(--color-graphite);"/>
+                <g style="fill: var(--color-graphite);">
+                  <text x="196" y="144">x</text>
+                  <text x="96" y="28">−z</text>
+                  <text x="104" y="84" style="fill: var(--color-accent);">yaw</text>
+                  <text x="30" y="214" style="fill: var(--color-secondary);">Vista de cima</text>
+                </g>
+
+                <!-- Vista de lado: pitch -->
+                <line x1="260" y1="150" x2="440" y2="150" style="stroke: var(--color-secondary);" stroke-width="1"/>
+                <g style="stroke: var(--color-primary);" stroke-width="1.75">
+                  <line x1="290" y1="150" x2="410" y2="70"/><polyline points="400,70 411,69 406,79"/>
+                </g>
+                <path d="M350 150 A60 60 0 0 0 340 117" style="stroke: var(--color-accent);" stroke-width="1.5"/>
+                <circle cx="290" cy="150" r="4" style="fill: var(--color-graphite);"/>
+                <g style="fill: var(--color-graphite);">
+                  <text x="356" y="134" style="fill: var(--color-accent);">pitch</text>
+                  <text x="380" y="166">horizontal</text>
+                  <text x="260" y="214" style="fill: var(--color-secondary);">Vista de lado</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>Mouse horizontal altera o <strong>yaw</strong>: giro em torno do eixo vertical.</li>
+                <li>Mouse vertical altera o <strong>pitch</strong>: inclinação para cima ou para baixo.</li>
+              </ul>
+              <div class="formula">
+                <var>dir</var><sub>x</sub> = sen(yaw) · cos(pitch)<br>
+                <var>dir</var><sub>y</sub> = sen(pitch)<br>
+                <var>dir</var><sub>z</sub> = −cos(yaw) · cos(pitch)
+              </div>
+              <p class="code-caption">Convenção do projeto: ângulos em graus, yaw 0 olha para −z. O vetor de direção é passado ao <span class="code-inline">gluLookAt</span> como ponto observado: olho + direção (<span class="code-inline">direcaoDoOlhar()</span>, em camera.c).</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 2 • 2.2</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S15 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 02 • Pergunta • 2.2</span></div>
+          <h2 class="question-title">O que acontece quando o pitch passa de 90°?</h2>
+          <p class="question-prompt">Lembrem da pergunta de verificação da semana passada, sobre o vetor Up do gluLookAt.</p>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S16 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">A Visada Fica Paralela ao Vetor Up</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>A direção de visada se torna paralela ao vetor <span class="code-inline">Up (0, 1, 0)</span> passado ao <span class="code-inline">gluLookAt</span>.</li>
+                <li>No valor exato, o produto vetorial entre os dois é zero: não há referência de orientação.</li>
+                <li class="warn">Ao ultrapassar, a câmera passa por cima do zênite, o Up continua apontando para cima e a cena inverte de cabeça para baixo de uma vez.</li>
+              </ul>
+              <p class="code-caption">É o problema teórico da pergunta de verificação da semana anterior.</p>
+            </div>
+
+            <div class="col-clean">
+              <div class="callout" style="margin-top: 0;">
+                <strong>Solução:</strong> limitar o pitch a pouco menos de 90°, por exemplo entre −89° e 89°.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 2 • 2.2</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S17 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">2.5 Quadro de Referência da Entrada</h2>
         </header>
 
         <div class="slide-body">
           <div class="table-wrapper">
-            <table class="academic-table">
+            <table class="academic-table compact">
               <thead>
-                <tr>
-                  <th class="table-col-20">Operação</th>
-                  <th class="table-col-36">Chamada em C</th>
-                  <th>Efeito na Aplicação</th>
-                </tr>
+                <tr><th class="table-col-20">Operação</th><th class="table-col-36">Chamada em C</th><th>Efeito</th></tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><strong>Pressionar tecla</strong></td>
-                  <td><span class="code-inline">glutKeyboardFunc(fn)</span></td>
-                  <td>Marca tecla como ativa no vetor de estado.</td>
-                </tr>
-                <tr>
-                  <td><strong>Soltar tecla</strong></td>
-                  <td><span class="code-inline">glutKeyboardUpFunc(fn)</span></td>
-                  <td>Marca tecla como inativa no vetor de estado.</td>
-                </tr>
-                <tr>
-                  <td><strong>Repetição</strong></td>
-                  <td><span class="code-inline">glutIgnoreKeyRepeat(1)</span></td>
-                  <td>Desativa atraso de repetição nativo do SO.</td>
-                </tr>
-                <tr>
-                  <td><strong>Movimento livre</strong></td>
-                  <td><span class="code-inline">glutPassiveMotionFunc(fn)</span></td>
-                  <td>Deslocamento do mouse para orientar a câmera.</td>
-                </tr>
-                <tr>
-                  <td><strong>Captura do cursor</strong></td>
-                  <td><span class="code-inline">glutWarpPointer(x, y)</span></td>
-                  <td>Centraliza o cursor simulando captura contínua.</td>
-                </tr>
-                <tr>
-                  <td><strong>Roda do mouse</strong></td>
-                  <td><span class="code-inline">glutMouseWheelFunc(fn)</span></td>
-                  <td>Extensão da freeglut para controle de FOV (zoom).</td>
-                </tr>
+                <tr><td><strong>Pressionar tecla</strong></td><td><span class="code-inline">glutKeyboardFunc(funcao)</span></td><td>Teclas de caractere; recebe a tecla e a posição do cursor</td></tr>
+                <tr><td><strong>Soltar tecla</strong></td><td><span class="code-inline">glutKeyboardUpFunc(funcao)</span></td><td>Necessária para construir o estado das teclas</td></tr>
+                <tr><td><strong>Teclas especiais</strong></td><td><span class="code-inline">glutSpecialFunc</span> e <span class="code-inline">glutSpecialUpFunc</span></td><td>Setas e teclas de função, pressionar e soltar</td></tr>
+                <tr><td><strong>Repetição</strong></td><td><span class="code-inline">glutIgnoreKeyRepeat(1)</span></td><td>Desativa a repetição automática de tecla</td></tr>
+                <tr><td><strong>Botões do mouse</strong></td><td><span class="code-inline">glutMouseFunc(funcao)</span></td><td>Chamada a cada clique ou soltura</td></tr>
+                <tr><td><strong>Movimento do mouse</strong></td><td><span class="code-inline">glutMotionFunc</span> e <span class="code-inline">glutPassiveMotionFunc</span></td><td>Com e sem botão pressionado, respectivamente</td></tr>
+                <tr><td><strong>Roda do mouse</strong></td><td><span class="code-inline">glutMouseWheelFunc(funcao)</span></td><td>Extensão da freeglut, em <span class="code-inline">GL/freeglut.h</span></td></tr>
+                <tr><td><strong>Ocultar cursor</strong></td><td><span class="code-inline">glutSetCursor(GLUT_CURSOR_NONE)</span></td><td>Torna o cursor invisível</td></tr>
+                <tr><td><strong>Reposicionar cursor</strong></td><td><span class="code-inline">glutWarpPointer(x, y)</span></td><td>Devolve o cursor ao centro, simulando a captura</td></tr>
+                <tr><td><strong>Atualização</strong></td><td><span class="code-inline">glutIdleFunc(funcao)</span></td><td>Chamada quando não há eventos; local da atualização do movimento</td></tr>
+                <tr><td><strong>Tempo decorrido</strong></td><td><span class="code-inline">glutGet(GLUT_ELAPSED_TIME)</span></td><td>Milissegundos desde o início; base do tempo de quadro</td></tr>
               </tbody>
             </table>
           </div>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">11 / 12</div>
+          <span class="footer-label">Bloco 2 • Consulta durante a prática</span>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
-
-      <!-- ====================================================================
-           SLIDE 12: DEMONSTRAÇÃO PRÁTICA
-           ==================================================================== -->
-      <section class="slide" id="slide-12">
+      <!-- S18 -->
+      <section class="slide">
         <header class="slide-header">
-          <h2 class="header-title">Demonstrações com Flags de Compilação</h2>
+          <h2 class="header-title">Bloco 3: Experimento Antes de Codar</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 417 a 423, 472 a 477</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>#if USAR_DT
+    float passo = VELOCIDADE * dt;
+    float giro  = VELOCIDADE_GIRO * dt;
+#else
+    float passo = PASSO_POR_QUADRO;         /* depende da taxa de quadros */
+    float giro  = GIRO_POR_QUADRO;
+#endif
+
+void temporizador(int valor)
+{
+    (void)valor;
+    atualiza();
+    glutTimerFunc(EXPERIMENTO_TIMER, temporizador, 0);
+}</code></pre>
+</div>
+              <div class="callout callout-alert">
+                <strong>Atenção:</strong> <span class="code-inline">glutTimerFunc</span> dispara uma única vez; <span class="code-inline">temporizador()</span> se registra de novo a cada chamada.
+              </div>
+            </div>
+
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>Versão com deslocamento fixo por quadro e timer de <strong>16 ms</strong>, depois de <strong>50 ms</strong>:</li>
+              </ul>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run USAR_DT=0 EXPERIMENTO_TIMER=16</span></p>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run USAR_DT=0 EXPERIMENTO_TIMER=50</span></p>
+              <p class="inline-question"><strong>Pergunta:</strong> "A câmera anda mais devagar ou mais rápido com 50 ms?" <span class="text-muted">Mais devagar: menos quadros por segundo, menos chamadas ao callback.</span></p>
+              <p class="quote-line">"O problema está na leitura, não no desenho. Agora vamos corrigir."</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 3 • Experimento</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S19 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">Passo 1: Vetor de Estado</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code">
+            <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 84 a 116 · src/main.c — 202, 207 e 208</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>void teclado(unsigned char tecla, int x, int y)
+{
+    teclas[tolower(tecla)] = 1;             /* estado: para as ações contínuas */
+    /* ... menu de pausa aberto: ver menu.c ... */
+    switch (tolower(tecla)) {               /* evento: para as ações discretas */
+        case 27:  abreMenu(); break;        /* ESC: menu de pausa */
+        case 9:   alternaCaptura(); break;  /* 9 é o código da tecla Tab */
+        case 'p':
+            projecaoOrtogonal = !projecaoOrtogonal;
+            aplicaProjecao();
+            break;
+        /* ... V (câmera), + e - (zoom) ... */
+    }
+}
+
+void tecladoSolto(unsigned char tecla, int x, int y)
+{
+    teclas[tolower(tecla)] = 0;
+}
+
+/* em main: */
+glutIgnoreKeyRepeat(1);
+glutKeyboardFunc(teclado);              /* tecla comum pressionada */
+glutKeyboardUpFunc(tecladoSolto);       /* tecla comum solta */</code></pre>
+</div>
+
+            <div class="col-clean">
+              <div class="col-clean-title"><span>Por que tolower</span></div>
+              <ul class="tech-list">
+                <li>Com Caps Lock ligado a tecla chega como <span class="code-inline">'W'</span>, que não bate com <span class="code-inline">teclas['w']</span>.</li>
+                <li>Se o Shift muda entre pressionar e soltar, a soltura chega com outro caractere e o movimento ficaria preso.</li>
+                <li>Normalizar nos dois lados evita os dois problemas.</li>
+              </ul>
+              <p class="inline-question"><strong>Pergunta:</strong> "Por que ESC e P ficam no callback de evento e não no laço de estado?" <span class="text-muted">Acontecem uma vez por toque; não devem se repetir 60 vezes por segundo.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 3 • Passo 1</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S20 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">Passo 2: Direção, Diagonal e Delta Time</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-code-equal">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 429 a 443, 453 e 454</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>float rad = yaw * PI / 180.0f;
+float frenteX  =  sinf(rad), frenteZ  = -cosf(rad);
+float direitaX =  cosf(rad), direitaZ =  sinf(rad);
+
+/* direção desejada no chão: cada tecla vale 1 (pressionada) ou 0 */
+float frente = (float)(teclas['w'] - teclas['s']);
+float lado   = (float)(teclas['d'] - teclas['a']);
+float mx = frenteX * frente + direitaX * lado;
+float mz = frenteZ * frente + direitaZ * lado;
+
+float comprimento = sqrtf(mx * mx + mz * mz);
+if (comprimento &gt; 0.0f) {               /* normaliza: na diagonal o */
+    mx /= comprimento;                  /* comprimento seria 1.41   */
+    mz /= comprimento;
+}
+
+float antesX = jogadorX, antesZ = jogadorZ;
+moveJogador(mx * passo, subir * passo, mz * passo);</code></pre>
+</div>
+              <p class="code-caption">Frente <span class="code-inline">(sen, −cos)</span> e direita <span class="code-inline">(cos, sen)</span> saem só do yaw. W − S e D − A valem 1, 0 ou −1; na diagonal a soma mede √2 e é normalizada.</p>
+            </div>
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 405 a 410, 466 · src/main.c — 217 a 221</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>void atualiza(void)
+{
+    int agora = glutGet(GLUT_ELAPSED_TIME);
+    float dt = (agora - ultimoTempo) / 1000.0f;
+    ultimoTempo = agora;
+    if (dt &gt; DT_MAXIMO) dt = DT_MAXIMO;
+    /* ... passo = VELOCIDADE * dt; teclas; moveJogador ... */
+    glutPostRedisplay();
+}
+
+/* em main: */
+#if EXPERIMENTO_TIMER
+    glutTimerFunc(EXPERIMENTO_TIMER, temporizador, 0);  /* máquina simulada */
+#else
+    glutIdleFunc(atualiza);                 /* nada acontecendo: atualiza */
+#endif</code></pre>
+</div>
+              <p class="code-caption"><span class="code-inline">ultimoTempo</span> começa em <span class="code-inline">main()</span>, para o primeiro dt não ser enorme. Com o tempo de quadro, 16 ms e 50 ms dão a mesma velocidade; só a suavidade muda.</p>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run EXPERIMENTO_TIMER=16</span></p>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run EXPERIMENTO_TIMER=50</span></p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 3 • Passo 2</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S21 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 04 • Colisão com o mundo</span></div>
+          <h2 class="question-title">O que transforma uma câmera voadora em um personagem com corpo?</h2>
+          <p class="question-prompt">A matriz do mundo deixa de ser só organização de dados.</p>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S22 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">4.1 Colisão: Detecção e Resposta</h2>
+        </header>
+
+        <div class="slide-body">
+          <p class="quote-line" style="margin-top: 0;">Colisão. É ela que dá peso e presença ao personagem, e passa a ser uma consulta à matriz do mundo.</p>
+
+          <div class="grid-2 space-top-md" style="height: auto;">
+            <div class="col-block col-block-primary">
+              <div class="col-title">Detecção</div>
+              <p>"Tem sobreposição?"</p>
+            </div>
+            <div class="col-block col-block-accent">
+              <div class="col-title">Resposta</div>
+              <p>"O que fazer?" Hoje, a mais simples: impedir o movimento. Amanhã pode ser ricochete, dano ou deslize.</p>
+            </div>
+          </div>
+
+          <div class="callout space-top-md">
+            <strong>O teste é feito antes do movimento:</strong> calcula-se a posição pretendida, verifica-se se está livre e o deslocamento só é aplicado em caso positivo.
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 4 • 4.1</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S23 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 04 • Pergunta • 4.2</span></div>
+          <h2 class="question-title">Por que representar o personagem como uma caixa alinhada aos eixos, e não como uma esfera ou o modelo 3D real?</h2>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S24 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">4.2 AABB: a Caixa Mais Simples que Funciona</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>Caixas alinhadas aos eixos não giram: o yaw não altera a caixa.</li>
+                <li>O teste se resume a comparar intervalos. Modelos reais exigem decomposição em triângulos.</li>
+              </ul>
+              <p class="space-top-sm">Há colisão se, e somente se, os intervalos se sobrepõem nos três eixos ao mesmo tempo:</p>
+              <div class="formula">
+                |<var>x</var><sub>a</sub> − <var>x</var><sub>b</sub>| &lt; (larg<sub>a</sub> + larg<sub>b</sub>) / 2<br>
+                |<var>y</var><sub>a</sub> − <var>y</var><sub>b</sub>| &lt; (alt<sub>a</sub> + alt<sub>b</sub>) / 2<br>
+                |<var>z</var><sub>a</sub> − <var>z</var><sub>b</sub>| &lt; (prof<sub>a</sub> + prof<sub>b</sub>) / 2
+              </div>
+            </div>
+
+            <div class="col-clean">
+              <div class="col-clean-title"><span>Em um mundo de blocos</span></div>
+              <ul class="tech-list">
+                <li>Não é preciso comparar o personagem com cada bloco.</li>
+                <li>As coordenadas do personagem, arredondadas para baixo, já são os índices da matriz.</li>
+                <li>Basta consultar as poucas posições que a caixa ocupa.</li>
+              </ul>
+              <div class="callout callout-alert space-top-sm">
+                <strong>No projeto:</strong> em cada eixo, a caixa cobre as células de <span class="code-inline">floor(min)</span> a <span class="code-inline">floor(max)</span>. Testar todas elas é o teste de intervalos feito contra a grade: no máximo 2 × 3 × 2 = 12 consultas.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 4 • 4.2</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S25 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">4.3 Consulta ao Mundo e Etapa 1: Só o Ponto Central</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-code">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/colisao.c — linhas 52 a 60</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body" data-lang="c"><code>int blocoSolido(int x, int y, int z)
+{
+    int tipo;
+
+    if (!dentroDoMundo(x, y, z)) return 1;  /* fora do mundo: parede */
+
+    tipo = mundo[x][y][z];
+    return tipo != VAZIO &amp;&amp; tipo != AGUA;
+}</code></pre>
+</div>
+              <div class="space-top-sm"><div class="code-block">
+  <div class="code-header"><span>src/colisao.c — linhas 128 a 132 (VERSAO_COLISAO 1)</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body" data-lang="c"><code>int posicaoLivre(float x, float y, float z)
+{
+#if VERSAO_COLISAO == 1
+    /* só o ponto central dos pés */
+    return !blocoSolido((int)floorf(x), (int)floorf(y), (int)floorf(z));</code></pre>
+</div></div>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run VERSAO_COLISAO=1</span></p>
+            </div>
+
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>Fora dos limites conta como sólido: paredes nas bordas, piso embaixo e teto em cima.</li>
+                <li>A água é desenhada, mas não é sólida.</li>
+                <li class="warn"><span class="code-inline">floorf</span>, não <span class="code-inline">(int)x</span>: o cast trunca em direção a zero e erra para coordenadas negativas.</li>
+              </ul>
+              <div class="callout callout-alert space-top-sm">
+                <strong>Só o centro:</strong> o personagem entra pela metade nos blocos antes de parar.
+              </div>
+              <p class="inline-question"><strong>Pergunta:</strong> "O que está faltando?" <span class="text-muted">A largura da caixa: o centro passa, as bordas já estão dentro do bloco.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 4 • 4.3</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S26 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">Etapa 2: Largura e Altura</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-code">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/colisao.c — linhas 126 a 147</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>#define FOLGA 0.001f    /* encostar não é sobrepor */
+
+    float meia = LARGURA_JOGADOR / 2.0f;
+    int x0 = (int)floorf(x - meia), x1 = (int)floorf(x + meia - FOLGA);
+    int y0 = (int)floorf(y),        y1 = (int)floorf(y + ALTURA_JOGADOR - FOLGA);
+    int z0 = (int)floorf(z - meia), z1 = (int)floorf(z + meia - FOLGA);
+    int cx, cy, cz;
+
+    for (cx = x0; cx &lt;= x1; cx++)
+        for (cy = y0; cy &lt;= y1; cy++)
+            for (cz = z0; cz &lt;= z1; cz++)
+                if (blocoSolido(cx, cy, cz))
+                    return 0;               /* a caixa toca um bloco sólido */
+    return 1;</code></pre>
+</div>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run VERSAO_COLISAO=2</span></p>
+            </div>
+
+            <div class="diagram-container">
+              <svg viewBox="0 0 520 250" width="100%" height="240" fill="none" font-family="IBM Plex Mono, monospace" font-size="11">
+                <!-- vista de cima: 3 x 2 blocos de 60 px; 0,6 bloco = 36 px -->
+                <rect x="20" y="100" width="60" height="60" style="fill: var(--color-callout-bg);"/>
+                <rect x="80" y="100" width="60" height="60" style="fill: var(--color-diagram-wall); stroke: var(--color-diagram-wall-stroke);" stroke-width="1.5"/>
+                <g style="stroke: var(--color-secondary);" stroke-width="0.75" stroke-opacity="0.5">
+                  <line x1="20" y1="40" x2="20" y2="160"/><line x1="80" y1="40" x2="80" y2="160"/>
+                  <line x1="140" y1="40" x2="140" y2="160"/><line x1="200" y1="40" x2="200" y2="160"/>
+                  <line x1="20" y1="40" x2="200" y2="40"/><line x1="20" y1="100" x2="200" y2="100"/><line x1="20" y1="160" x2="200" y2="160"/>
+                </g>
+                <text x="96" y="152" style="fill: var(--color-secondary);">sólido</text>
+                <rect x="55" y="112" width="36" height="36" style="fill: var(--color-diagram-box); stroke: var(--color-diagram-box-stroke);" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <circle cx="73" cy="130" r="2.5" style="fill: var(--color-primary);"/>
+                <g style="fill: var(--color-accent);">
+                  <circle cx="55" cy="112" r="3"/><circle cx="55" cy="148" r="3"/>
+                  <circle cx="91" cy="112" r="3"/><circle cx="91" cy="148" r="3"/>
+                </g>
+                <g style="fill: var(--color-graphite);">
+                  <text x="20" y="30">Vista de cima</text>
+                  <text x="20" y="186">centro livre,</text>
+                  <text x="20" y="200">dois cantos no bloco</text>
+                </g>
+
+                <!-- vista de lado: células de 60 px; 1,8 de altura = 108 px -->
+                <rect x="370" y="70" width="60" height="60" style="fill: var(--color-callout-bg);"/>
+                <rect x="370" y="130" width="60" height="60" style="fill: var(--color-callout-bg);"/>
+                <g style="stroke: var(--color-secondary);" stroke-width="0.75" stroke-opacity="0.5">
+                  <line x1="310" y1="10" x2="310" y2="190"/><line x1="370" y1="10" x2="370" y2="190"/>
+                  <line x1="430" y1="10" x2="430" y2="190"/><line x1="490" y1="10" x2="490" y2="190"/>
+                  <line x1="310" y1="10" x2="490" y2="10"/><line x1="310" y1="70" x2="490" y2="70"/>
+                  <line x1="310" y1="130" x2="490" y2="130"/><line x1="310" y1="190" x2="490" y2="190"/>
+                </g>
+                <rect x="382" y="82" width="36" height="108" style="fill: var(--color-diagram-box); stroke: var(--color-diagram-box-stroke);" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <g style="fill: var(--color-graphite);">
+                  <text x="310" y="218">Vista de lado</text>
+                  <text x="438" y="86">cabeça</text>
+                  <text x="438" y="186">pés</text>
+                </g>
+              </svg>
+              <span class="diagram-caption">A caixa cobre de floor(min) a floor(max) em cada eixo; só as células sombreadas são consultadas.</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 4 • 4.3</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S27 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 04 • Pergunta • Etapa 3</span></div>
+          <h2 class="question-title">Se eu testo o deslocamento (dx, dz) como um só e a posição final colide, o que acontece ao andar em diagonal contra uma parede?</h2>
+          <p class="question-prompt">Há claramente espaço para deslizar ao longo da superfície.</p>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S28 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">Etapa 3: Testar Eixo a Eixo (o Deslize)</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="diagram-container" style="height: auto;">
+            <svg viewBox="0 0 520 175" width="100%" height="140" fill="none" font-family="IBM Plex Mono, monospace" font-size="11">
+                <!-- painel 1: teste conjunto -->
+                <rect x="10" y="20" width="230" height="40" style="fill: var(--color-diagram-wall); stroke: var(--color-diagram-wall-stroke);" stroke-width="1.5"/>
+                <text x="98" y="45" style="fill: var(--color-secondary);">PAREDE</text>
+                <rect x="85" y="62" width="36" height="36" style="fill: var(--color-diagram-box); stroke: var(--color-diagram-box-stroke);" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <g style="stroke: var(--color-accent);" stroke-width="1.75">
+                  <line x1="103" y1="80" x2="150" y2="40" stroke-dasharray="4 3"/>
+                  <line x1="144" y1="34" x2="156" y2="46"/><line x1="156" y1="34" x2="144" y2="46"/>
+                </g>
+                <g style="fill: var(--color-graphite);">
+                  <text x="10" y="130">Teste conjunto</text>
+                  <text x="10" y="148" style="fill: var(--color-accent);">(dx, dz) colide: trava</text>
+                </g>
+
+                <!-- painel 2: eixo a eixo -->
+                <rect x="280" y="20" width="230" height="40" style="fill: var(--color-diagram-wall); stroke: var(--color-diagram-wall-stroke);" stroke-width="1.5"/>
+                <text x="368" y="45" style="fill: var(--color-secondary);">PAREDE</text>
+                <rect x="345" y="62" width="36" height="36" style="fill: var(--color-diagram-box); stroke: var(--color-diagram-box-stroke);" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <g style="stroke: var(--color-primary);" stroke-width="1.75">
+                  <line x1="363" y1="80" x2="430" y2="80"/><polyline points="424,75 431,80 424,85"/>
+                </g>
+                <g style="stroke: var(--color-accent);" stroke-width="1.5" stroke-dasharray="3 3">
+                  <line x1="363" y1="80" x2="363" y2="50"/>
+                </g>
+                <g style="fill: var(--color-graphite);">
+                  <text x="436" y="84" style="fill: var(--color-primary);">X: aplica</text>
+                  <text x="280" y="130">Eixo a eixo</text>
+                  <text x="280" y="148" style="fill: var(--color-accent);">Z descartado, X segue:</text>
+                  <text x="280" y="164" style="fill: var(--color-primary);">desliza rente à parede</text>
+                </g>
+              </svg>
+          </div>
+          <div class="grid-code space-top-sm" style="height: auto;">
+            <div class="code-block">
+  <div class="code-header"><span>src/colisao.c — linhas 211 a 224</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>static void movePedaco(float dx, float dy, float dz)
+{
+#if VERSAO_COLISAO &gt;= 4
+    if (posicaoLivre(jogadorX + dx, jogadorY, jogadorZ)) jogadorX += dx;
+    if (posicaoLivre(jogadorX, jogadorY, jogadorZ + dz)) jogadorZ += dz;
+    if (posicaoLivre(jogadorX, jogadorY + dy, jogadorZ)) jogadorY += dy;
+#else
+    if (posicaoLivre(jogadorX + dx, jogadorY + dy, jogadorZ + dz)) {
+        jogadorX += dx;
+        jogadorY += dy;
+        jogadorZ += dz;
+    }
+#endif
+}</code></pre>
+</div>
+            <div class="col-clean">
+              <p>Cada teste parte do resultado do eixo anterior. Se um eixo bloqueia e o outro está livre, o personagem desliza.</p>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run VERSAO_COLISAO=3</span></p>
+              <p class="code-caption">eixos juntos: trava na diagonal</p>
+              <p class="code-caption">Versão de demonstração: <span class="code-inline">make run VERSAO_COLISAO=4</span></p>
+              <p class="code-caption">eixo a eixo: desliza</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 4 • 4.3</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S29 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 04 • Pergunta • 4.4</span></div>
+          <h2 class="question-title">Se o dt for muito grande, o deslocamento por quadro pode ser maior que um bloco. O que acontece?</h2>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S30 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">4.4 Tunelamento: o Limite do Delta Time</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code">
+            <div>
+              <div class="callout callout-alert" style="margin-top: 0;">
+                <strong>Tunelamento:</strong> o teste só vê a posição final. Um passo maior que a parede a atravessa sem acionar a colisão.
+              </div>
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linha 410 · src/colisao.c — linhas 226 a 236</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>if (dt &gt; DT_MAXIMO) dt = DT_MAXIMO;         /* DT_MAXIMO = 0.1 s */
+
+void moveJogador(float dx, float dy, float dz)
+{
+    float comprimento = sqrtf(dx * dx + dy * dy + dz * dz);
+    int pedacos = (int)ceilf(comprimento / PASSO_MAXIMO);
+    int i;
+
+    if (pedacos &lt; 1) pedacos = 1;           /* parado: um pedaço nulo */
+
+    for (i = 0; i &lt; pedacos; i++)
+        movePedaco(dx / pedacos, dy / pedacos, dz / pedacos);
+}</code></pre>
+</div>
+            </div>
+
+            <div class="col-clean">
+              <div class="col-clean-title"><span>O projeto faz as duas coisas</span></div>
+              <ul class="tech-list">
+                <li><strong>Limita o dt:</strong> um travamento da janela não vira um salto. Ressalva: abaixo de 10 FPS o jogo anda em câmera lenta, o que contradiz o Bloco 1.</li>
+                <li><strong>Divide o deslocamento:</strong> nenhum teste salta mais que <span class="code-inline">PASSO_MAXIMO</span> = 0,5 bloco, mesmo correndo. É a alternativa que preserva a velocidade.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 4 • 4.4</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S31 -->
+      <section class="slide slide-dark slide-question">
+        <div class="question-content">
+          <div class="question-badge"><span>Bloco 05 • Câmera em primeira e terceira pessoa</span></div>
+          <h2 class="question-title">Teclado e mouse já funcionam separadamente. O que muda ao conectá-los?</h2>
+        </div>
+        <footer class="slide-footer">
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S32 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">Nada no Movimento: Só os Argumentos do gluLookAt</h2>
         </header>
 
         <div class="slide-body">
           <div class="table-wrapper">
-            <table class="academic-table">
+            <table class="academic-table compact">
               <thead>
-                <tr>
-                  <th class="table-col-32">Comando no Terminal</th>
-                  <th>Defeito Demonstrado e Efeito Observado</th>
-                </tr>
+                <tr><th class="table-col-20">Argumento</th><th class="table-col-36">O que é</th><th>Pergunta que responde</th></tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><span class="code-inline">make run USAR_DT=0</span></td>
-                  <td>Passo fixo por quadro: velocidade acoplada ao FPS da máquina.</td>
-                </tr>
-                <tr>
-                  <td><span class="code-inline">make run EXPERIMENTO_TIMER=50</span></td>
-                  <td>Simula máquina lenta (50 ms) para comparar com 16 ms (60 FPS).</td>
-                </tr>
-                <tr>
-                  <td><span class="code-inline">make run VERSAO_COLISAO=1</span></td>
-                  <td>Colisão no ponto central: o personagem penetra até a metade do bloco.</td>
-                </tr>
-                <tr>
-                  <td><span class="code-inline">make run VERSAO_COLISAO=3</span></td>
-                  <td>Eixos X e Z testados juntos: trava ao encostar na diagonal.</td>
-                </tr>
-                <tr>
-                  <td><span class="code-inline">make run LIMITAR_PITCH=0</span></td>
-                  <td>Sem trava de inclinação: olhar a 90° inverte bruscamente a imagem.</td>
-                </tr>
+                <tr><td><strong>Olho</strong> (<span class="code-inline">eye</span>)</td><td>Posição da câmera</td><td>Onde está o fotógrafo?</td></tr>
+                <tr><td><strong>Alvo</strong> (<span class="code-inline">center</span>)</td><td>Ponto para o qual ela olha</td><td>Para onde ele aponta? (um ponto: a direção é alvo − olho)</td></tr>
+                <tr><td><strong>Up</strong></td><td>Vetor que indica onde é "cima"</td><td>Qual lado da foto é o céu? Aqui sempre <span class="code-inline">(0, 1, 0)</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid-2 space-top-md" style="height: auto;">
+            <div class="col-clean">
+              <div class="col-clean-title"><span>A cada quadro, nesta ordem</span></div>
+              <ol class="tech-steps">
+                <li><span class="code-inline">glLoadIdentity()</span> na MODELVIEW</li>
+                <li><span class="code-inline">gluLookAt(...)</span> com os valores deste quadro</li>
+                <li>Desenhar o mundo</li>
+                <li>Em terceira pessoa, desenhar o personagem</li>
+              </ol>
+            </div>
+            <div class="col-clean">
+              <div class="col-clean-title"><span>Ordem de construção</span></div>
+              <ol class="tech-steps">
+                <li>Primeira pessoa só com yaw</li>
+                <li>O pitch, com seu limite</li>
+                <li>A captura do cursor</li>
+                <li>Por último, a terceira pessoa</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 5 • Antes do código</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S33 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">5.1 O Mouse: Captura, Yaw, Pitch e Limite</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code-equal">
+            <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 210 a 234</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>void movimentoMouse(int x, int y)
+{
+    int cx = larguraJanela / 2, cy = alturaJanela / 2;
+    int dx = x - cx, dy = y - cy;
+
+    if (!cursorCapturado) return;
+
+    if (recentrar) {                        /* cursor fora do centro: só */
+        recentrar = 0;                      /* reposiciona, sem girar    */
+        glutWarpPointer(cx, cy);
+        return;
+    }
+
+    if (dx == 0 &amp;&amp; dy == 0) return;         /* eco do glutWarpPointer */
+
+    yaw   += dx * SENSIBILIDADE;
+    pitch -= dy * SENSIBILIDADE;            /* y de tela cresce para baixo */
+
+#if LIMITAR_PITCH
+    if (pitch &gt;  LIMITE_PITCH) pitch =  LIMITE_PITCH;
+    if (pitch &lt; -LIMITE_PITCH) pitch = -LIMITE_PITCH;
+#endif
+
+    glutWarpPointer(cx, cy);                /* devolve o cursor ao centro */
+}</code></pre>
+</div>
+
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 244 a 255 · src/main.c — 211 e 212</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>void capturaCursor(void)
+{
+    cursorCapturado = 1;
+    recentrar = 1;
+    glutSetCursor(GLUT_CURSOR_NONE);
+}
+
+void liberaCursor(void)
+{
+    cursorCapturado = 0;
+    glutSetCursor(GLUT_CURSOR_INHERIT);
+}
+
+/* em main: as duas, senão a visada congela */
+glutPassiveMotionFunc(movimentoMouse);  /* mouse movido sem botão */
+glutMotionFunc(movimentoMouse);         /* mouse movido com botão */</code></pre>
+</div>
+              <p class="code-caption">O deslocamento é medido a partir do centro, então o eco do <span class="code-inline">glutWarpPointer</span> chega como zero. <span class="code-inline">recentrar</span> evita um tranco no primeiro movimento depois de capturar. TAB (código 9) alterna a captura no <span class="code-inline">teclado()</span>; o jogo já começa capturado.</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 5 • 5.1</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S34 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">5.2 Primeira Pessoa: Câmera nos Olhos do Personagem</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/camera.c — linhas 186 a 194</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>void direcaoDoOlhar(float *dx, float *dy, float *dz)
+{
+    float ry = yaw   * PI / 180.0f;
+    float rp = pitch * PI / 180.0f;
+
+    *dx =  sinf(ry) * cosf(rp);
+    *dy =  sinf(rp);
+    *dz = -cosf(ry) * cosf(rp);
+}</code></pre>
+</div>
+              <div class="space-top-sm">
+              <div class="code-block">
+  <div class="code-header"><span>src/camera.c — linhas 427 a 436, em posicionaCamera()</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>float cabecaX = jogadorX;
+float cabecaY = jogadorY + ALTURA_OLHOS;
+float cabecaZ = jogadorZ;
+
+direcaoDoOlhar(&amp;dx, &amp;dy, &amp;dz);
+
+if (modoCamera == PRIMEIRA_PESSOA) {
+    gluLookAt(cabecaX, cabecaY, cabecaZ,
+              cabecaX + dx, cabecaY + dy, cabecaZ + dz,
+              0.0, 1.0, 0.0);</code></pre>
+</div>
+              </div>
+            </div>
+
+            <div class="col-clean">
+              <div class="callout callout-alert" style="margin-top: 0;">
+                <strong>Atenção:</strong> o avanço usa a direção do olhar projetada no plano horizontal (<span class="code-inline">frenteX</span>, <span class="code-inline">frenteZ</span> de <span class="code-inline">atualiza()</span>, sem componente Y).
+              </div>
+              <ul class="tech-list space-top-sm">
+                <li class="warn">Com o vetor completo, olhar para cima faria o personagem subir voando.</li>
+                <li>O olhar usa pitch; o deslocamento não.</li>
+                <li>Olhos a <span class="code-inline">ALTURA_OLHOS</span> = 1,6 acima dos pés.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 5 • 5.2</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S35 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">5.3 Primeira e Terceira Pessoa</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="diagram-container">
+              <svg viewBox="0 0 560 230" width="100%" height="230" fill="none" font-family="IBM Plex Mono, monospace" font-size="12">
+                <!-- primeira pessoa -->
+                <circle cx="140" cy="150" r="22" style="stroke: var(--color-graphite);" stroke-width="1.5"/>
+                <line x1="140" y1="128" x2="140" y2="60" style="stroke: var(--color-primary);" stroke-width="1.75"/>
+                <polyline points="134,68 140,58 146,68" style="stroke: var(--color-primary);" stroke-width="1.75"/>
+                <line x1="140" y1="150" x2="140" y2="56" style="stroke: var(--color-accent);" stroke-width="1.25" stroke-dasharray="4 4"/>
+                <circle cx="140" cy="150" r="4" style="fill: var(--color-accent);"/>
+                <circle cx="140" cy="56" r="4" style="fill: var(--color-primary);"/>
+                <g style="fill: var(--color-graphite);">
+                  <text x="150" y="154">olho</text>
+                  <text x="150" y="52">alvo</text>
+                  <text x="60" y="210">Primeira pessoa</text>
+                </g>
+
+                <!-- terceira pessoa -->
+                <circle cx="420" cy="100" r="22" style="stroke: var(--color-graphite);" stroke-width="1.5"/>
+                <line x1="420" y1="78" x2="420" y2="30" style="stroke: var(--color-primary);" stroke-width="1.75"/>
+                <polyline points="414,38 420,28 426,38" style="stroke: var(--color-primary);" stroke-width="1.75"/>
+                <line x1="420" y1="185" x2="420" y2="100" style="stroke: var(--color-accent);" stroke-width="1.25" stroke-dasharray="4 4"/>
+                <circle cx="420" cy="185" r="4" style="fill: var(--color-accent);"/>
+                <circle cx="420" cy="100" r="4" style="fill: var(--color-primary);"/>
+                <g style="fill: var(--color-graphite);">
+                  <text x="430" y="189">olho</text>
+                  <text x="430" y="104">alvo</text>
+                  <text x="350" y="214">Terceira pessoa</text>
+                </g>
+              </svg>
+              <span class="diagram-caption">Vista de cima. A seta é a direção do olhar; a linha tracejada liga olho e alvo e aponta para o mesmo lado nos dois modos.</span>
+            </div>
+            <div class="col-clean">
+              <p class="inline-question" style="margin-top: 0;"><strong>Pergunta:</strong> "Nos dois modos o personagem anda e olha para o mesmo lado. O que muda nos dados de posição e movimento?"</p>
+              <p class="quote-line">Nada. Yaw, pitch, velocidade e colisão são os mesmos. Só mudam quem é olho e quem é alvo.</p>
+              <ul class="tech-list space-top-md">
+                <li>Em terceira pessoa o personagem precisa ser desenhado.</li>
+                <li>Em primeira, não: ele ocuparia o próprio ponto de vista.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 5 • 5.3</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S36 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">5.3 Terceira Pessoa: o Personagem como Alvo</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/camera.c — linhas 437 a 448, em posicionaCamera()</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>} else {
+    float ry = yaw * PI / 180.0f;
+    float frenteX = sinf(ry), frenteZ = -cosf(ry);  /* só o plano do chão */
+
+    gluLookAt(cabecaX - frenteX * DISTANCIA_CAMERA,  /* atrás */
+              cabecaY + ELEVACAO_CAMERA,             /* acima, altura fixa */
+              cabecaZ - frenteZ * DISTANCIA_CAMERA,
+              cabecaX,                               /* olha o personagem, */
+              cabecaY + dy * DISTANCIA_CAMERA,       /* inclinado pelo pitch */
+              cabecaZ,
+              0.0, 1.0, 0.0);
+}</code></pre>
+</div>
+              <div class="space-top-sm">
+              <div class="code-block">
+  <div class="code-header"><span>src/camera.c — linhas 328 a 330, em desenhaJogador()</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-tiny" data-lang="c"><code>glPushMatrix();
+glTranslatef(jogadorX, jogadorY, jogadorZ);         /* pés, centro da caixa */
+glRotatef(-yaw, 0.0f, 1.0f, 0.0f);                  /* frente do boneco = -z local */</code></pre>
+</div>
+              </div>
+            </div>
+
+            <div class="col-clean">
+              <ul class="tech-list">
+                <li>A câmera recua 4 blocos no sentido oposto ao olhar e fica 1,5 acima dos olhos; o alvo é a cabeça.</li>
+                <li>Recuo só no plano horizontal: a câmera nunca desce. O pitch só inclina a vista, deslocando o alvo.</li>
+                <li>O personagem gira por <span class="code-inline">-yaw</span> e é visto de costas.</li>
+              </ul>
+              <div class="callout callout-alert space-top-sm">
+                <strong>V ou F5</strong> alterna o modo. Trocar andando não muda a trajetória: só o ponto de vista.
+              </div>
+              <div class="callout callout-alert">
+                <strong>Sem o limite do pitch</strong> (<span class="code-inline">make run LIMITAR_PITCH=0</span>), olhar direto para cima inverte a cena.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 5 • 5.3 e 5.4</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S37 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">5.5 Roda do Mouse: Zoom por FOV</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="grid-code">
+            <div>
+              <div class="code-block">
+  <div class="code-header"><span>src/entrada.c — linhas 319 a 333</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>void mudaZoom(int direcao)
+{
+    campoDeVisao -= direcao * 5.0f;         /* fov menor = mais perto */
+    if (campoDeVisao &lt; FOV_MIN) campoDeVisao = FOV_MIN;
+    if (campoDeVisao &gt; FOV_MAX) campoDeVisao = FOV_MAX;
+
+    aplicaProjecao();
+}
+
+void rodaMouse(int roda, int direcao, int x, int y)
+{
+    (void)roda; (void)x; (void)y;
+    if (!menuAberto)
+        mudaZoom(direcao);                  /* roda para cima aproxima */
+}</code></pre>
+</div>
+              <div class="space-top-sm">
+              <div class="code-block">
+  <div class="code-header"><span>src/camera.c — linha 110, em aplicaProjecao()</span><span class="code-lang-tag">C</span></div>
+  <pre class="code-body code-small" data-lang="c"><code>gluPerspective(campoDeVisao, aspecto, 0.1, 200.0);</code></pre>
+</div>
+              </div>
+            </div>
+
+            <div class="col-clean">
+              <p class="inline-question" style="margin-top: 0;"><strong>Pergunta:</strong> "Qual a diferença entre aproximar o zoom e andar em direção ao objeto?" <span class="text-muted">Andar muda a perspectiva; o zoom só estreita o campo de visão.</span></p>
+              <p class="quote-line">"Não é mover a câmera, é estreitar o ângulo de visão. Como uma luneta."</p>
+              <ul class="tech-list space-top-md">
+                <li>Passos de 5°, de 20° a 90°; a lente é refeita na hora.</li>
+                <li>As teclas <span class="code-inline">+</span> e <span class="code-inline">-</span> chamam a mesma <span class="code-inline">mudaZoom()</span>.</li>
+                <li><span class="code-inline">glutMouseWheelFunc</span> é extensão da freeglut: o projeto inclui <span class="code-inline">GL/freeglut.h</span>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Bloco 5 • 5.5</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S38 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">5.6 Resumo dos Controles</h2>
+        </header>
+
+        <div class="slide-body">
+
+          <div class="table-wrapper">
+            <table class="academic-table compact">
+              <thead>
+                <tr><th class="table-col-32">Entrada</th><th>Ação</th><th class="table-col-20">Tipo de leitura</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="code-inline">W, A, S, D</span></td><td>Deslocamento (frente, esquerda, trás, direita)</td><td>Estado</td></tr>
+                <tr><td><span class="code-inline">R</span> (segurando)</td><td>Correr: dobra a velocidade</td><td>Estado</td></tr>
+                <tr><td><span class="code-inline">Espaço</span> ou <span class="code-inline">↑</span> / <span class="code-inline">Shift</span> ou <span class="code-inline">↓</span></td><td>Subir / descer</td><td>Estado</td></tr>
+                <tr><td><span class="code-inline">←</span> / <span class="code-inline">→</span></td><td>Girar o olhar</td><td>Estado</td></tr>
+                <tr><td><strong>Mouse</strong></td><td>Direção do olhar (yaw e pitch)</td><td>Deslocamento relativo ao centro</td></tr>
+                <tr><td><span class="code-inline">V</span> ou <span class="code-inline">F5</span></td><td>Alterna terceira (início) e primeira pessoa</td><td>Evento</td></tr>
+                <tr><td><span class="code-inline">TAB</span> / clique</td><td>Libera ou captura o cursor</td><td>Evento</td></tr>
+                <tr><td><span class="code-inline">P</span></td><td>Alterna perspectiva e ortográfica</td><td>Evento</td></tr>
+                <tr><td><strong>Roda</strong> ou <span class="code-inline">+</span> / <span class="code-inline">-</span></td><td>Zoom por FOV</td><td>Evento</td></tr>
+                <tr><td><span class="code-inline">ESC</span></td><td>Abre e fecha o menu de pausa</td><td>Evento</td></tr>
+                <tr><td><span class="code-inline">Q</span> (menu aberto)</td><td>Encerra</td><td>Evento</td></tr>
               </tbody>
             </table>
           </div>
         </div>
 
         <footer class="slide-footer">
-          <div class="footer-slide-num">12 / 12</div>
+          <span class="footer-label">Bloco 5 • 5.6</span>
+          <div class="footer-slide-num"></div>
+        </footer>
+      </section>
+
+      <!-- S39 -->
+      <section class="slide">
+        <header class="slide-header">
+          <h2 class="header-title">Encerramento: O Que Construímos</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="col-clean">
+              <ol class="tech-steps">
+                <li>Movimentação contínua por estado com delta time.</li>
+                <li>Colisão com o mundo: consulta à matriz, eixo a eixo.</li>
+                <li>Câmera em primeira e terceira pessoa.</li>
+              </ol>
+            </div>
+            <div class="col-block col-block-accent">
+              <div class="col-title">Perguntas para reflexão</div>
+              <ul class="tech-list">
+                <li>Se o personagem puder pular, a colisão em Y precisa de tratamento separado?</li>
+                <li>E se o bloco não for cúbico, como uma rampa?</li>
+                <li>Como fazer a terceira pessoa orbitar o personagem usando o pitch?</li>
+                <li>Em terceira pessoa a câmera atravessa paredes. Como evitar?</li>
+                <li>Quando vale dividir o dt em subpassos em vez de limitar?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span class="footer-label">Encerramento</span>
+          <div class="footer-slide-num"></div>
         </footer>
       </section>
 
@@ -603,13 +1535,13 @@
   <aside id="slide-controls" class="print-hide">
     <button class="control-btn" id="btn-prev" title="Slide Anterior (←)">◀</button>
     <div class="slide-counter">
-      <span id="current-slide-index">01</span> / <span id="total-slides-count">12</span>
+      <span id="current-slide-index">01</span> / <span id="total-slides-count">01</span>
     </div>
     <button class="control-btn" id="btn-next" title="Próximo Slide (→)">▶</button>
     <div class="control-divider"></div>
     <button class="control-btn" id="btn-overview" title="Grade de Miniaturas (O)">⊞</button>
     <button class="control-btn" id="btn-fullscreen" title="Tela Cheia (F)">⛶</button>
-    <button class="control-btn" id="btn-print" title="Exportar para PDF (P ou Ctrl+P)">🖨</button>
+    <button class="control-btn" id="btn-print" title="Exportar para PDF (P ou Ctrl+P)">⎙</button>
     <button class="control-btn" id="btn-help" title="Atalhos de Teclado (?)">?</button>
   </aside>
 
@@ -647,6 +1579,10 @@
       <div class="help-item">
         <span>Exportar para PDF</span>
         <div><span class="kbd">P</span> ou <span class="kbd">Ctrl + P</span></div>
+      </div>
+      <div class="help-item">
+        <span>Tocar ou pausar o vídeo</span>
+        <span>clique no vídeo</span>
       </div>
       <div class="help-item">
         <span>Fechar Ajuda / Sair da Visão Geral</span>
